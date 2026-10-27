@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Amena demo 1: Live prototype</title>
 <meta name="description" content="Amena Sahmoud, UX and graphic designer. Portfolio concept where the fintech case study is a working prototype.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;600;700;800&family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
 <style>
 /* ---- shared: lightbox, badge, a11y helpers ---- */
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -29,12 +31,12 @@
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
 
 :root{
-  --blue:#2d4bf0;--blue-600:#2238c9;--blue-50:#eef1ff;--blue-100:#dfe4ff;
-  --ink:#0e1430;--ink-2:#2a3150;--muted:#5d647b;--line:#e3e6f0;--bg:#f7f8fb;--card:#fff;
-  --ok:#14a06a;--radius:20px;
+  --blue:#1e4b9a;--blue-600:#162b55;--blue-50:#fde8f2;--blue-100:#fbd3e6;--pink:#f22788;
+  --ink:#18181b;--ink-2:#27272a;--muted:#71717b;--line:#e4e4e7;--bg:#fafafa;--card:#fff;
+  --ok:#29c941;--radius:20px;
   --shadow:0 1px 2px rgba(14,20,48,.05),0 8px 24px rgba(14,20,48,.06);
   --shadow-lg:0 2px 6px rgba(14,20,48,.06),0 30px 60px rgba(14,20,48,.12);
-  --font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font:"Inter Display","Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--display:"Changa",ui-sans-serif,system-ui,sans-serif;--label:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -47,7 +49,7 @@ button{font:inherit;color:inherit}
 main{overflow-x:clip}
 .wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 20px}
 .muted{color:var(--muted)}
-.eyebrow{font:700 12px/1 var(--font);letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin:0 0 14px}
+.eyebrow{font:700 12px/1 var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin:0 0 14px}
 .concept-badge{background:rgba(255,255,255,.82);color:var(--ink-2);border:1px solid var(--line);box-shadow:var(--shadow)}
 
 /* ---------- nav ---------- */
@@ -77,8 +79,8 @@ main{overflow-x:clip}
 /* ---------- hero ---------- */
 .hero{display:grid;grid-template-columns:1.25fr 1fr;gap:48px;align-items:center;padding-top:64px;padding-bottom:72px}
 .avail{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:650;color:var(--ink-2);background:#fff;border:1px solid var(--line);padding:6px 12px 6px 10px;border-radius:999px;margin:0 0 22px}
-.avail i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(20,160,106,.5);animation:ping 2s infinite}
-@keyframes ping{70%{box-shadow:0 0 0 8px rgba(20,160,106,0)}100%{box-shadow:0 0 0 0 rgba(20,160,106,0)}}
+.avail i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(41,201,65,.5);animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 8px rgba(41,201,65,0)}100%{box-shadow:0 0 0 0 rgba(41,201,65,0)}}
 .hero h1{font-size:clamp(34px,5.4vw,64px);line-height:1.04;letter-spacing:-.035em;margin:0 0 28px;font-weight:780}
 .rot{color:var(--blue);display:inline-block;position:relative}
 .rot span{display:inline-block;transition:opacity .35s,transform .35s}
@@ -208,7 +210,7 @@ main{overflow-x:clip}
 .chap-q cite{display:block;font-style:normal;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:6px}
 .chap-try{margin:16px 0 0;font-size:14px;font-weight:650;color:var(--blue);display:flex;gap:8px;align-items:center}
 .chap-try::before{content:"";width:18px;height:18px;border-radius:50%;border:2px solid currentColor;background:radial-gradient(circle,currentColor 0 3px,transparent 4px)}
-.chap.on .chap-n{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 8px 18px rgba(45,75,240,.3)}
+.chap.on .chap-n{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 8px 18px rgba(30,75,154,.3)}
 .chap.on .chap-t{color:var(--ink)}
 .chap.on .chap-body{opacity:1}
 .chap.on .chap-q{border-left-color:var(--blue)}
@@ -387,6 +389,14 @@ main{overflow-x:clip}
 @media (max-width:620px){.masonry{columns:2;column-gap:8px}.g-item{margin-bottom:8px;border-radius:10px}}
 .view-enter{animation:viewIn .45s ease both}
 @keyframes viewIn{from{opacity:0;transform:translateY(10px)}}
+
+/* ---- Amena brand pass (fonts + colors from amenasahmoud.com) ---- */
+h1,h2,h3,.h2,.brand,.hero h1,.feat-body h3{font-family:var(--display);letter-spacing:-.01em}
+.hero h1,.sec h2,.h2{color:var(--blue);font-weight:700}
+.hero h1 .tail{color:var(--blue);font-weight:600}
+.rot{color:var(--pink)}
+.tag{background:var(--blue-50);color:var(--pink);font-family:var(--label)}
+.tl .when,.feat-body .dates,.roles span,.avail{font-family:var(--label)}
 </style>
 </head>
 <body>
