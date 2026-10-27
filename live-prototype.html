@@ -387,6 +387,13 @@ main{overflow-x:clip}
 .g-item:hover img{transform:scale(1.03)}
 .g-item::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(14,20,48,.06);border-radius:14px;pointer-events:none}
 @media (max-width:620px){.masonry{columns:2;column-gap:8px}.g-item{margin-bottom:8px;border-radius:10px}}
+.gf{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:22px}
+.gf-b{background:none;border:0;padding:4px 0;cursor:pointer;font:600 12px/1.2 var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid transparent}
+.gf-b:hover{color:var(--blue)}
+.gf-b[aria-pressed="true"]{color:var(--blue);border-bottom-color:currentColor}
+.g-t{position:absolute;left:0;right:0;bottom:0;padding:28px 12px 10px;text-align:left;color:#fff;font:600 11px/1.25 var(--label);letter-spacing:.1em;text-transform:uppercase;background:linear-gradient(transparent,rgba(10,16,40,.62));opacity:0;transition:opacity .25s;pointer-events:none}
+.g-item:hover .g-t,.g-item:focus-visible .g-t{opacity:1}
+@media (hover:none){.g-t{opacity:1}}
 .view-enter{animation:viewIn .45s ease both}
 @keyframes viewIn{from{opacity:0;transform:translateY(10px)}}
 
@@ -599,11 +606,34 @@ var A = (function (R, D) {
     cs.metaGet = function (k) { for (var q = 0; q < meta.length; q++) if (meta[q].k === k) return meta[q].v; return []; };
     return cs;
   }
+  /* gallery filters as on amenasahmoud.com: category -> Framer image-id prefixes */
+  var GCATS = {
+    photography: {
+      'Nature': ['KqQIx0t2', 'h8klK0av', 'W34tBRa8'],
+      'Documentary': ['8WC218oB', 'vg7MIA51', 'xgPfSYbx', '8hIjhDrt', 'qAB88jGh'],
+      'Portrait': ['IX5SDJOi', 'UJxr6v0S', '449IlwfJ', 'uvXxiUzq'],
+      'Travel': ['NNgtL9FF', 'Ikp9ZAPH', 'LhsBtMpH']
+    },
+    graphic: {
+      'Branding': ['DodEYR5b', 'u70n6Woz', 'zqGKGhd5', 'q97p98V8', 'SG6dCDLo', 'U9xEUL7h', 'jwouIPiU', 'j5NTwrcE', '4Zxz34tb'],
+      'Social Media': ['CJMSy2FG', '46Tza0It', 'RF4sO6wu', 'WQteZ5wU', '9cgM3tYm', '5nEigj1l', 'W8frhG5Z', 'nyxyPbdE', 'aFCkOuXB', 'BFDL2ut8', 'zMPgxxF5', 'jIztGfwA'],
+      'Art': ['HlkgW0EG', 'AtkJiV3b', 'ZJjAtcqS', '2CcXApNr', '7G4aphnI', 'l9n4GAlP', 'cVAdfTGd'],
+      'Packaging': ['MiAsDD3R', 'SBp751Wv']
+    }
+  };
+  function fileOf(src) { return String(src).split('?')[0].split('/').pop(); }
   function buildGallery(key, id, noun, url) {
     var b = prep(key), imgs = b.filter(function (o) { return o.t === 'img'; }).map(function (o) { return o.src; });
-    var set = imgs.map(function (src, k) { return { src: src, alt: noun + ' ' + (k + 1) + ' of ' + imgs.length, cap: noun + ' ' + (k + 1) + ' / ' + imgs.length }; });
+    var titles = {}, cats = GCATS[id] || {}, names = Object.keys(cats);
+    (R[key] || []).forEach(function (o) { if (o.t === 'img' && o.alt) titles[fileOf(o.src)] = o.alt; });
+    var set = imgs.map(function (src, k) {
+      var f = fileOf(src), t = titles[f] || '';
+      return { src: src, title: t, cats: names.filter(function (c) { return cats[c].some(function (p) { return f.indexOf(p) === 0; }); }),
+        alt: (t || noun) + ', ' + (k + 1) + ' of ' + imgs.length, cap: t || (noun + ' ' + (k + 1) + ' / ' + imgs.length) };
+    });
     SETS[id] = set;
-    return { id: id, key: key, url: url, title: b[0].x, images: imgs, set: set };
+    names.forEach(function (c) { SETS[id + ':' + c] = set.filter(function (s) { return s.cats.indexOf(c) >= 0; }); });
+    return { id: id, key: key, url: url, title: b[0].x, images: imgs, set: set, cats: names };
   }
 
   /* ---------- home ---------- */
@@ -693,10 +723,12 @@ var A = (function (R, D) {
       return '<div><dt>' + esc(m.k) + '</dt><dd>' + (m.k === 'Skills' ? m.v.map(function (v) { return '<span class="tag">' + esc(v) + '</span>'; }).join(' ') : esc(m.v.join(', '))) + '</dd></div>';
     }).join('') + '</dl>';
   }
-  function galleryButtons(g, w, cls) {
-    return g.images.map(function (src, k) {
-      var d = dims(src), wide = d && d[0] / d[1] > 2.2;
-      return '<button type="button" class="' + (cls || 'g-item') + (wide ? ' wide' : '') + '" data-lb="' + g.id + '" data-i="' + k + '" aria-label="Open ' + esc(g.set[k].alt) + '">' + imgTag(src, { w: w || 512, alt: g.set[k].alt }) + '</button>';
+  function galleryButtons(g, w, cls, cat) {
+    var id = cat ? g.id + ':' + cat : g.id;
+    return SETS[id].map(function (s, k) {
+      var d = dims(s.src), wide = d && d[0] / d[1] > 2.2;
+      return '<button type="button" class="' + (cls || 'g-item') + (wide ? ' wide' : '') + '" data-lb="' + id + '" data-i="' + k + '" aria-label="Open ' + esc(s.alt) + '">' + imgTag(s.src, { w: w || 512, alt: s.alt }) +
+        (!cls && s.title ? '<span class="g-t">' + esc(s.title) + '</span>' : '') + '</button>';
     }).join('');
   }
 
@@ -1117,9 +1149,20 @@ var A = (function (R, D) {
 
   /* ---------------- galleries ---------------- */
   function galleryView(g, noun) {
-    return '<section class="wrap gal-head"><a class="back" href="#/">← All work</a><p class="eyebrow">Gallery</p><h1 id="page-h" tabindex="-1">' + esc(g.title) + '</h1><p class="muted">' + g.images.length + ' ' + noun + ' · select any image to view it full size, then use ← → to browse.</p></section>' +
-      '<div class="wrap"><div class="masonry">' + A.galleryButtons(g, 1024) + '</div></div>' + contactBlock();
+    var tabs = g.cats.length ? '<div class="gf" role="group" aria-label="Filter ' + esc(g.title) + '">' + [''].concat(g.cats).map(function (c) {
+      return '<button type="button" class="gf-b" data-gf="' + esc(c) + '" data-g="' + g.id + '" aria-pressed="' + (c ? 'false' : 'true') + '">' + esc(c || 'All') + '</button>';
+    }).join('') + '</div>' : '';
+    return '<section class="wrap gal-head"><a class="back" href="#/">← All work</a><p class="eyebrow">Gallery</p><h1 id="page-h" tabindex="-1">' + esc(g.title) + '</h1><p class="muted">' + g.images.length + ' ' + noun + ' · select any image to view it full size, then use ← → to browse.</p>' + tabs + '</section>' +
+      '<div class="wrap"><div class="masonry" id="gal-m">' + A.galleryButtons(g, 1024) + '</div></div>' + contactBlock();
   }
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-gf]'), m = document.getElementById('gal-m');
+    if (!b || !m) return;
+    var g = b.getAttribute('data-g') === PH.id ? PH : GD;
+    m.innerHTML = A.galleryButtons(g, 1024, null, b.getAttribute('data-gf'));
+    [].forEach.call(b.parentNode.children, function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+  });
 
   /* ---------------- router ---------------- */
   A.sets.life = H.life.map(function (s, k) { return { src: s, alt: 'Photo by Amena, ' + (k + 1) + ' of ' + H.life.length, cap: H.outside }; });
