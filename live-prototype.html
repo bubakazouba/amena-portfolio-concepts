@@ -31,7 +31,7 @@
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
 
 :root{
-  --blue:#1e4b9a;--blue-600:#162b55;--blue-50:#fde8f2;--blue-100:#fbd3e6;--pink:#f22788;
+  --blue:#1e4b9a;--blue-600:#162b55;--blue-50:#fde8f2;--blue-100:#fbd3e6;--pink:#ff218c;--yellow:#ffd800;--sky:#21b1ff;--tri:linear-gradient(90deg,var(--pink) 0 33.4%,var(--yellow) 33.4% 66.7%,var(--sky) 66.7%);
   --ink:#18181b;--ink-2:#27272a;--muted:#71717b;--line:#e4e4e7;--bg:#fafafa;--card:#fff;
   --ok:#29c941;--radius:20px;
   --shadow:0 1px 2px rgba(14,20,48,.05),0 8px 24px rgba(14,20,48,.06);
@@ -394,6 +394,19 @@ main{overflow-x:clip}
 .g-t{position:absolute;left:0;right:0;bottom:0;padding:28px 12px 10px;text-align:left;color:#fff;font:600 11px/1.25 var(--label);letter-spacing:.1em;text-transform:uppercase;background:linear-gradient(transparent,rgba(10,16,40,.62));opacity:0;transition:opacity .25s;pointer-events:none}
 .g-item:hover .g-t,.g-item:focus-visible .g-t{opacity:1}
 @media (hover:none){.g-t{opacity:1}}
+/* ---- resume accents: the pink / yellow / sky rule under her name, pink section labels ---- */
+.nav::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:4px;background:var(--tri)}
+.foot{border-top:0;position:relative}
+.foot::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--tri)}
+.eyebrow{color:var(--pink)}
+.gf-b[aria-pressed="true"]{color:var(--blue);border-bottom-color:var(--pink)}
+.gf-b:nth-child(3n+2):hover{color:var(--pink)}
+.gf-b:nth-child(3n+3):hover{color:#b89a00}
+.gf-b:nth-child(3n+4):hover{color:var(--sky)}
+.tag:nth-of-type(3n+2){background:#fff7cc;color:#7a6400}
+.tag:nth-of-type(3n+3){background:#e3f5ff;color:#0a6ea8}
+.foot a:hover,.back:hover{color:var(--pink)}
+::selection{background:var(--yellow);color:var(--ink)}
 .view-enter{animation:viewIn .45s ease both}
 @keyframes viewIn{from{opacity:0;transform:translateY(10px)}}
 
@@ -410,7 +423,7 @@ h1,h2,h3,.h2,.brand,.hero h1,.feat-body h3{font-family:var(--display);letter-spa
 <a class="skip" href="#view">Skip to content</a>
 <header class="nav" id="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="#/">Amena Sahmoud<span>.</span></a>
+    <a class="brand" href="#/">Amena Sahmoud</a>
     <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="navlinks">Menu</button>
     <nav id="navlinks" aria-label="Primary">
       <a href="#/">Home</a>
@@ -421,13 +434,13 @@ h1,h2,h3,.h2,.brand,.hero h1,.feat-body h3{font-family:var(--display);letter-spa
       <a href="#/about">About</a>
       <a href="#/contact">Contact</a>
     </nav>
-    <a class="btn btn-sm btn-primary" id="resumeBtn" href="https://www.amenasahmoud.com" target="_blank" rel="noopener">Résumé ↗</a>
+    <a class="btn btn-sm btn-primary" id="resumeBtn" href="https://www.amenasahmoud.com" target="_blank" rel="noopener">Resumé ↗</a>
   </div>
 </header>
 <main id="view" tabindex="-1"></main>
 <footer class="foot">
   <div class="wrap">
-    <a class="brand" href="#/">Amena Sahmoud<span>.</span></a>
+    <a class="brand" href="#/">Amena Sahmoud</a>
     <nav aria-label="Footer">
       <a href="#/work/sahl-system-design">Sahl system</a><a href="#/work/mascot">Budz mascot</a><a href="#/photography">Photography</a><a href="#/graphic-design">Graphic design</a><a href="https://www.amenasahmoud.com/#contact" target="_blank" rel="noopener">Contact ↗</a>
     </nav>
@@ -893,7 +906,7 @@ var A = (function (R, D) {
   }
   function contactBlock() {
     return '<section class="sec wrap" id="contact" aria-labelledby="contact-h"><div class="contact"><p class="eyebrow" style="color:#c9d1ff">Contact</p><h2 id="contact-h">' + esc(H.contactTitle) + '</h2>' +
-      '<div class="cta"><a class="btn btn-primary" href="' + A.CONTACT + '" target="_blank" rel="noopener">Send a message ↗</a><a class="btn btn-ghost" href="' + A.RESUME + '" target="_blank" rel="noopener">Résumé ↗</a></div></div></section>';
+      '<div class="cta"><a class="btn btn-primary" href="' + A.CONTACT + '" target="_blank" rel="noopener">Send a message ↗</a><a class="btn btn-ghost" href="' + A.RESUME + '" target="_blank" rel="noopener">Resumé ↗</a></div></div></section>';
   }
 
   /* ---------------- case study ---------------- */
