@@ -625,7 +625,8 @@ var A = (function (R, D) {
       'Nature': ['KqQIx0t2', 'h8klK0av', 'W34tBRa8'],
       'Documentary': ['8WC218oB', 'vg7MIA51', 'xgPfSYbx', '8hIjhDrt', 'qAB88jGh'],
       'Portrait': ['IX5SDJOi', 'UJxr6v0S', '449IlwfJ', 'uvXxiUzq'],
-      'Travel': ['NNgtL9FF', 'Ikp9ZAPH', 'LhsBtMpH']
+      'Travel': ['NNgtL9FF', 'Ikp9ZAPH', 'LhsBtMpH'],
+      'Event': ['vtoGsbaJ', 'DvzW6g71', '2SGu5ZN9', 'W48Xjbl3', 'QpdjkpYG']   /* robotics competition, tagged by Amena 10/28 */
     },
     graphic: {
       'Branding': ['DodEYR5b', 'u70n6Woz', 'zqGKGhd5', 'q97p98V8', 'SG6dCDLo', 'U9xEUL7h', 'jwouIPiU', 'j5NTwrcE', '4Zxz34tb'],
@@ -638,7 +639,7 @@ var A = (function (R, D) {
   function buildGallery(key, id, noun, url) {
     var b = prep(key), imgs = b.filter(function (o) { return o.t === 'img'; }).map(function (o) { return o.src; });
     var titles = {}, cats = GCATS[id] || {}, names = Object.keys(cats);
-    (R[key] || []).forEach(function (o) { if (o.t === 'img' && o.alt) titles[fileOf(o.src)] = o.alt; });
+    (R[key] || []).forEach(function (o) { if (o.t === 'img' && o.alt && o.alt !== 'Untitled') titles[fileOf(o.src)] = o.alt; });
     var set = imgs.map(function (src, k) {
       var f = fileOf(src), t = titles[f] || '';
       return { src: src, title: t, cats: names.filter(function (c) { return cats[c].some(function (p) { return f.indexOf(p) === 0; }); }),
