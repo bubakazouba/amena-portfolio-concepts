@@ -824,7 +824,8 @@ var A = (function (R, D) {
     home: home, cases: cases, galleries: galleries, sets: SETS,
     renderItems: renderItems, renderSection: renderSection, renderMeta: renderMeta, galleryButtons: galleryButtons,
     lightbox: lightbox,
-    article: function (word) { return /^[AEIOU]/i.test(word) ? 'an' : 'a'; }
+    /* by sound, not spelling: "a UX designer" (you-ex), "an Artist" */
+    article: function (word) { return /^(U[A-Z]|uni|use|usu)/.test(word) || !/^[AEIOU]/i.test(word) ? 'a' : 'an'; }
   };
 })(AMENA_RAW, AMENA_DIMS);
 
