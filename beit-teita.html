@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beit Teita</title>
+<meta name="description" content="Beit Teita, a photo series by Amena Sahmoud. Concept demo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Amiri:wght@400;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#e4e8df;      /* the pale celadon wall */
+    --paper-2:#d6ddd2;
+    --ink:#1d231f;        /* shadowed room green-black */
+    --ink-soft:#4a544c;
+    --gilt:#a88a55;       /* gilded chair + table legs */
+    --rose:#9c5446;       /* dried flowers on the fridge */
+    --night:#121613;
+    --serif:"Cormorant Garamond", Georgia, serif;
+    --arabic:"Amiri", "Cormorant Garamond", serif;
+    --sans:"Inter", system-ui, sans-serif;
+    --gutter:clamp(16px, 4vw, 56px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+  /* subtle film grain over everything */
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.07;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+  /* top bar */
+  .bar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:14px var(--gutter);font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#eef1ea;mix-blend-mode:difference}
+  .bar a{color:inherit;text-decoration:none}
+  .progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--gilt);z-index:45}
+
+  /* hero */
+  .hero{position:relative;height:100svh;min-height:560px;overflow:hidden;background:var(--night)}
+  .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;transform:scale(1.06);animation:settle 2.6s cubic-bezier(.2,.7,.2,1) forwards;filter:brightness(.82)}
+  @keyframes settle{to{transform:scale(1)}}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,22,19,.15) 0%,rgba(18,22,19,0) 35%,rgba(18,22,19,.75) 100%)}
+  .hero-text{position:absolute;left:var(--gutter);right:var(--gutter);bottom:clamp(40px,9vh,96px);z-index:2;color:#f1f3ec}
+  .hero-ar{font-family:var(--arabic);font-size:clamp(28px,4vw,44px);direction:rtl;display:block;opacity:.85;margin-bottom:.1em}
+  .hero h1{font-weight:400;font-size:clamp(64px,13vw,184px);line-height:.9;letter-spacing:-.02em}
+  .hero h1 em{font-style:italic;color:#d9c7a0}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:22px;font-family:var(--sans);font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:.8}
+  .cue{position:absolute;right:var(--gutter);bottom:clamp(40px,9vh,96px);z-index:2;font-family:var(--sans);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#f1f3ec;opacity:.75;writing-mode:vertical-rl;display:flex;align-items:center;gap:12px}
+  .cue::after{content:"";width:1px;height:56px;background:currentColor;animation:drip 2.2s ease-in-out infinite;transform-origin:top}
+  @keyframes drip{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+
+  /* intro */
+  .intro{max-width:880px;margin:0 auto;padding:clamp(80px,14vh,160px) var(--gutter) clamp(60px,10vh,120px);text-align:center}
+  .eyebrow{font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft)}
+  .intro p.lede{font-size:clamp(26px,3.4vw,40px);line-height:1.3;margin:22px 0 26px}
+  .intro p.lede em{color:var(--rose)}
+  .intro .note{font-family:var(--sans);font-size:13px;color:var(--ink-soft);max-width:520px;margin:0 auto}
+  .rule{width:1px;height:72px;background:var(--gilt);margin:40px auto 0}
+
+  /* plates */
+  .plate{position:relative;margin:0 auto clamp(90px,16vh,180px);padding:0 var(--gutter);max-width:1440px}
+  .frame{position:relative;overflow:hidden;cursor:zoom-in;background:var(--paper-2)}
+  .frame img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1),filter .6s}
+  .frame:hover img{transform:scale(1.025)}
+  .frame:focus-visible{outline:2px solid var(--gilt);outline-offset:4px}
+  .cap{display:flex;gap:16px;align-items:baseline;margin-top:14px;font-size:17px}
+  .cap .num{font-family:var(--sans);font-size:11px;letter-spacing:.18em;color:var(--gilt);min-width:2.4em}
+  .cap i{color:var(--ink-soft)}
+
+  /* layout A: tall image + text column */
+  .split{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(24px,5vw,80px);align-items:end}
+  .split.rev{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+  .split.rev .side{order:-1}
+  .split .frame{aspect-ratio:722/1024}
+  .side{padding-bottom:12px}
+  .side .big{font-size:clamp(28px,3.2vw,44px);line-height:1.2;font-style:italic;margin-bottom:18px}
+  .side .small{font-family:var(--sans);font-size:13px;color:var(--ink-soft);max-width:340px}
+
+  /* layout B: full-bleed dark room */
+  .bleed{max-width:none;padding:0;background:var(--night);color:#e6e9e1}
+  .bleed .inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:100svh}
+  .bleed .frame{background:#0c0f0d;height:100%;min-height:80svh}
+  .bleed .txt{display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,8vw,120px)}
+  .bleed .txt .big{font-size:clamp(34px,4.4vw,64px);line-height:1.1;font-style:italic}
+  .bleed .txt .big span{color:#d9c7a0}
+  .bleed .cap{color:#c8cdc4}
+  .bleed .cap i{color:#9aa296}
+
+  /* layout C: centered small, lots of wall */
+  .center{max-width:620px}
+  .center .frame{aspect-ratio:722/1024}
+
+  /* contact sheet */
+  .sheet{background:var(--ink);color:#e6e9e1;padding:clamp(70px,12vh,130px) var(--gutter)}
+  .sheet-head{max-width:1440px;margin:0 auto 32px;display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:12px}
+  .sheet-head h2{font-weight:400;font-size:clamp(36px,5vw,64px);line-height:1}
+  .sheet-head .eyebrow{color:#9aa296}
+  .strip{max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,1.4vw,18px);padding:18px;background:#0b0d0c;border-radius:2px}
+  .strip button{position:relative;aspect-ratio:722/1024;overflow:hidden;background:#222}
+  .strip img{width:100%;height:100%;object-fit:cover;filter:saturate(.85);transition:filter .4s,transform .6s}
+  .strip button:hover img,.strip button:focus-visible img{filter:saturate(1.1) brightness(1.05);transform:scale(1.04)}
+  .strip button span{position:absolute;left:8px;bottom:6px;font-family:var(--sans);font-size:10px;letter-spacing:.14em;color:#f0d9a0;text-shadow:0 1px 2px #000}
+  .sprockets{height:14px;max-width:1440px;margin:0 auto;background:radial-gradient(circle at 50% 50%,#2c332e 0 3px,transparent 3.5px) 0 0/22px 14px repeat-x}
+
+  /* elsewhere */
+  .elsewhere{padding:clamp(80px,14vh,150px) var(--gutter) 40px;max-width:1440px;margin:0 auto}
+  .elsewhere-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:end;margin-bottom:36px}
+  .elsewhere-head h2{font-weight:400;font-size:clamp(34px,4.4vw,56px);line-height:1.05}
+  .elsewhere-head p{font-family:var(--sans);font-size:13px;color:var(--ink-soft);max-width:420px;justify-self:end}
+  .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,1.6vw,22px)}
+  .grid4 .frame{aspect-ratio:722/1024}
+  .grid4 .frame:nth-child(even){margin-top:clamp(20px,5vw,72px)}
+
+  footer{border-top:1px solid #c3cbbf;margin:clamp(60px,10vh,110px) var(--gutter) 0;padding:28px 0 40px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--sans);font-size:12px;color:var(--ink-soft)}
+  footer a{color:var(--ink);text-underline-offset:3px}
+  footer .ar{font-family:var(--arabic);font-size:20px;color:var(--ink)}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(28px);transition:opacity 1.1s ease,transform 1.1s cubic-bezier(.2,.7,.2,1)}
+  .rv.in{opacity:1;transform:none}
+  .rv.d1{transition-delay:.15s}.rv.d2{transition-delay:.3s}
+  .no-js .rv{opacity:1;transform:none}
+
+  /* lightbox */
+  .lb{position:fixed;inset:0;z-index:100;background:#0b0d0c;display:grid;grid-template-rows:auto 1fr auto;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+  .lb.open{opacity:1;visibility:visible}
+  .lb-top,.lb-bot{display:flex;justify-content:space-between;align-items:center;padding:14px var(--gutter);color:#d7dcd3;font-family:var(--sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+  .lb-bot{text-transform:none;letter-spacing:0;font-family:var(--serif);font-size:19px;font-style:italic;justify-content:center;text-align:center;min-height:64px}
+  .lb-stage{position:relative;display:flex;align-items:center;justify-content:center;min-height:0;padding:0 64px;touch-action:pan-y}
+  .lb-stage img{max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 30px 80px rgba(0,0,0,.5);transition:opacity .25s}
+  .lb-stage img.fade{opacity:0}
+  .lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border:1px solid rgba(255,255,255,.25);border-radius:50%;color:#eee;font-size:20px;display:grid;place-items:center;transition:background .2s}
+  .lb-nav:hover{background:rgba(255,255,255,.1)}
+  .lb-prev{left:8px}.lb-next{right:8px}
+  .lb-close{font-size:12px;letter-spacing:.18em;padding:8px 0}
+
+  @media (max-width:860px){
+    .split,.split.rev{grid-template-columns:1fr}
+    .split.rev .side{order:0}
+    .side{padding-bottom:0}
+    .bleed .inner{grid-template-columns:1fr;min-height:0}
+    .bleed .frame{min-height:0;aspect-ratio:722/1024}
+    .bleed .txt{padding:56px var(--gutter) 64px}
+    .strip{grid-template-columns:repeat(2,minmax(0,1fr));padding:10px}
+    .elsewhere-head{grid-template-columns:1fr}
+    .elsewhere-head p{justify-self:start}
+    .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .cue{display:none}
+    .lb-stage{padding:0 8px}
+    .lb-nav{top:auto;bottom:-56px;transform:none}
+    .lb-bot{padding-left:72px;padding-right:72px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .rv{opacity:1;transform:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body class="no-js">
+<div class="progress" id="progress"></div>
+<header class="bar">
+  <a href="#top">Beit Teita</a>
+  <a href="https://www.amenasahmoud.com" target="_blank" rel="noopener">Amena Sahmoud</a>
+</header>
+
+<section class="hero" id="top">
+  <img src="https://framerusercontent.com/images/8WC218oBVeLyid6UlBg4wwhz61M.jpg?scale-down-to=2048" alt="Beit Teita: lace curtains parted over a balcony window, two upholstered armchairs in shadow">
+  <div class="hero-text">
+    <span class="hero-ar" lang="ar">بيت تيتا</span>
+    <h1>Beit <em>Teita</em></h1>
+    <div class="hero-meta"><span>A photo series</span><span>Amena Sahmoud</span><span>Four frames</span></div>
+  </div>
+  <div class="cue" aria-hidden="true">Scroll</div>
+</section>
+
+<section class="intro">
+  <div class="eyebrow rv">Grandma's house</div>
+  <p class="lede rv d1"><em>Beit Teita</em> is Arabic for “grandma's house.” Lace at the window, a fan on a gilded table, a clock that keeps its own time.</p>
+  <p class="note rv d2">Placeholder introduction for the artist to replace with her own words. Captions below are working titles describing what is in each frame.</p>
+  <div class="rule rv d2"></div>
+</section>
+
+<!-- I -->
+<section class="plate">
+  <div class="split">
+    <figure class="rv">
+      <button class="frame" data-i="0" aria-label="Open plate I">
+        <img loading="lazy" src="https://framerusercontent.com/images/8WC218oBVeLyid6UlBg4wwhz61M.jpg?scale-down-to=1024" alt="Lace curtains parted over a balcony window, two armchairs in shadow">
+      </button>
+      <figcaption class="cap"><span class="num">I</span><span>The window <i>— lace, railing, the city beyond</i></span></figcaption>
+    </figure>
+    <div class="side rv d1">
+      <p class="big">Two chairs face each other across the light.</p>
+      <p class="small">Working caption. The curtains carry a woven border; the rooftops outside fade to the same pale green as the wall.</p>
+    </div>
+  </div>
+</section>
+
+<!-- II: dark full-bleed -->
+<section class="plate bleed">
+  <div class="inner">
+    <button class="frame rv" data-i="1" aria-label="Open plate II">
+      <img loading="lazy" src="https://framerusercontent.com/images/vg7MIA51vbN3oQ3LxGrF51k9c0.jpg?scale-down-to=2048" alt="A white box fan on a small gilded table beside an ornate gold chair">
+    </button>
+    <div class="txt">
+      <p class="big rv">A fan on a <span>gilded</span> table, waiting for summer.</p>
+      <div class="cap rv d1"><span class="num">II</span><span>The fan <i>— gold leaf, a cushion, a curtain</i></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- III -->
+<section class="plate">
+  <div class="split rev">
+    <div class="side rv">
+      <p class="big">A globe, two clocks, a tin of painted scenery.</p>
+      <p class="small">Working caption. Things set down on top of the fridge and kept there, on a cloth printed with red flowers.</p>
+    </div>
+    <figure class="rv d1">
+      <button class="frame" data-i="2" aria-label="Open plate III">
+        <img loading="lazy" src="https://framerusercontent.com/images/xgPfSYbxlfk9rdHZcRqP5eooY.jpg?scale-down-to=1024" alt="A globe, a clear acrylic clock, a small alarm clock, a painted tin and dried flowers on top of a refrigerator">
+      </button>
+      <figcaption class="cap"><span class="num">III</span><span>The shelf <i>— time, twice</i></span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- IV -->
+<section class="plate center">
+  <figure class="rv">
+    <button class="frame" data-i="3" aria-label="Open plate IV">
+      <img loading="lazy" src="https://framerusercontent.com/images/8hIjhDrtJrWFjz15eGkSYrF8pI.jpg?scale-down-to=1024" alt="Out-of-focus bookshelf with worn spines and a blue glass dish">
+    </button>
+    <figcaption class="cap"><span class="num">IV</span><span>The bookshelf <i>— soft focus, a blue dish</i></span></figcaption>
+  </figure>
+</section>
+
+<!-- contact sheet -->
+<section class="sheet" id="sheet">
+  <div class="sheet-head">
+    <h2 class="rv">Contact sheet</h2>
+    <div class="eyebrow rv d1">Tap a frame to view it large</div>
+  </div>
+  <div class="sprockets" aria-hidden="true"></div>
+  <div class="strip">
+    <button data-i="0" aria-label="View frame I"><img loading="lazy" src="https://framerusercontent.com/images/8WC218oBVeLyid6UlBg4wwhz61M.jpg?scale-down-to=512" alt=""><span>01</span></button>
+    <button data-i="1" aria-label="View frame II"><img loading="lazy" src="https://framerusercontent.com/images/vg7MIA51vbN3oQ3LxGrF51k9c0.jpg?scale-down-to=512" alt=""><span>02</span></button>
+    <button data-i="2" aria-label="View frame III"><img loading="lazy" src="https://framerusercontent.com/images/xgPfSYbxlfk9rdHZcRqP5eooY.jpg?scale-down-to=512" alt=""><span>03</span></button>
+    <button data-i="3" aria-label="View frame IV"><img loading="lazy" src="https://framerusercontent.com/images/8hIjhDrtJrWFjz15eGkSYrF8pI.jpg?scale-down-to=512" alt=""><span>04</span></button>
+  </div>
+  <div class="sprockets" aria-hidden="true"></div>
+</section>
+
+<!-- elsewhere -->
+<section class="elsewhere">
+  <div class="elsewhere-head">
+    <h2 class="rv">Outside, in the<br>same faded light</h2>
+    <p class="rv d1">Untitled frames from Amena's photography page that share the series' washed greens. Not part of Beit Teita; shown here as a companion set.</p>
+  </div>
+  <div class="grid4">
+    <button class="frame rv" data-i="4" aria-label="Open untitled frame"><img loading="lazy" src="https://framerusercontent.com/images/h8klK0avv5zjPfroXDEf1V58Ws.jpg?scale-down-to=1024" alt="Horses grazing in a green field below tall evergreens"></button>
+    <button class="frame rv d1" data-i="5" aria-label="Open untitled frame"><img loading="lazy" src="https://framerusercontent.com/images/LhsBtMpHeEUHorIPI5i7JxlBV4.jpg?scale-down-to=1024" alt="Pastel kayaks stacked on a rack by a mountain lake"></button>
+    <button class="frame rv" data-i="6" aria-label="Open untitled frame"><img loading="lazy" src="https://framerusercontent.com/images/Ikp9ZAPHjAjABTNluIyVazX5LJ0.jpg?scale-down-to=1024" alt="Bear in Area and Boat Rentals signs in a lakeside park"></button>
+    <button class="frame rv d1" data-i="7" aria-label="Open untitled frame"><img loading="lazy" src="https://framerusercontent.com/images/NNgtL9FFfdH0kHkzzxiqUSPzas.jpg?scale-down-to=1024" alt="A four-way stop sign under tangled power lines on a rural road"></button>
+  </div>
+</section>
+
+<footer>
+  <span>Concept demo built from Amena Sahmoud's Beit Teita photo series · <a href="https://www.amenasahmoud.com" target="_blank" rel="noopener">amenasahmoud.com</a></span>
+  <span class="ar" lang="ar">بيت تيتا</span>
+</footer>
+
+<!-- lightbox -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true">
+  <div class="lb-top"><span id="lbCount">1 / 8</span><button class="lb-close" id="lbClose">Close ✕</button></div>
+  <div class="lb-stage" id="lbStage">
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">←</button>
+    <img id="lbImg" alt="">
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Next">→</button>
+  </div>
+  <div class="lb-bot" id="lbCap"></div>
+</div>
+
+<script>
+(function(){
+  document.body.classList.remove('no-js');
+  var U='https://framerusercontent.com/images/';
+  var photos=[
+    ['8WC218oBVeLyid6UlBg4wwhz61M','I. The window','Beit Teita'],
+    ['vg7MIA51vbN3oQ3LxGrF51k9c0','II. The fan','Beit Teita'],
+    ['xgPfSYbxlfk9rdHZcRqP5eooY','III. The shelf','Beit Teita'],
+    ['8hIjhDrtJrWFjz15eGkSYrF8pI','IV. The bookshelf','Beit Teita'],
+    ['h8klK0avv5zjPfroXDEf1V58Ws','Untitled','Companion frame'],
+    ['LhsBtMpHeEUHorIPI5i7JxlBV4','Untitled','Companion frame'],
+    ['Ikp9ZAPHjAjABTNluIyVazX5LJ0','Untitled','Companion frame'],
+    ['NNgtL9FFfdH0kHkzzxiqUSPzas','Untitled','Companion frame']
+  ];
+
+  /* scroll reveals */
+  var els=document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    els.forEach(function(el){io.observe(el);});
+  } else els.forEach(function(el){el.classList.add('in');});
+  /* safety net: anything already scrolled past (fast scroll, anchor jump) is revealed too */
+  var t=null;function sweep(){t=null;var vh=innerHeight;document.querySelectorAll('.rv:not(.in)').forEach(function(el){if(el.getBoundingClientRect().top<vh*0.94)el.classList.add('in');});}
+  addEventListener('scroll',function(){if(!t)t=setTimeout(sweep,150);},{passive:true});addEventListener('load',sweep);
+
+  /* progress bar */
+  var bar=document.getElementById('progress');
+  function prog(){var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;bar.style.width=(m>0?h.scrollTop/m*100:0)+'%';}
+  addEventListener('scroll',prog,{passive:true});prog();
+
+  /* lightbox */
+  var lb=document.getElementById('lb'),img=document.getElementById('lbImg'),cap=document.getElementById('lbCap'),cnt=document.getElementById('lbCount');
+  var cur=0,last=null;
+  function show(i){
+    cur=(i+photos.length)%photos.length;var p=photos[cur];
+    img.classList.add('fade');
+    var n=new Image();n.onload=function(){img.src=n.src;img.alt=p[1];img.classList.remove('fade');};
+    n.src=U+p[0]+'.jpg?scale-down-to=2048';
+    cap.textContent=p[1]+(p[2]?'  ·  '+p[2]:'');
+    cnt.textContent=(cur+1)+' / '+photos.length;
+    [cur+1,cur-1].forEach(function(j){var q=photos[(j+photos.length)%photos.length];(new Image()).src=U+q[0]+'.jpg?scale-down-to=2048';});
+  }
+  function open(i){last=document.activeElement;show(i);lb.classList.add('open');lb.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';document.getElementById('lbClose').focus();}
+  function close(){lb.classList.remove('open');lb.setAttribute('aria-hidden','true');document.body.style.overflow='';if(last)last.focus();}
+  document.querySelectorAll('[data-i]').forEach(function(b){b.addEventListener('click',function(){open(+b.dataset.i);});});
+  document.getElementById('lbClose').onclick=close;
+  document.getElementById('lbPrev').onclick=function(){show(cur-1);};
+  document.getElementById('lbNext').onclick=function(){show(cur+1);};
+  lb.addEventListener('click',function(e){if(e.target===lb||e.target.id==='lbStage')close();});
+  addEventListener('keydown',function(e){if(!lb.classList.contains('open'))return;if(e.key==='Escape')close();else if(e.key==='ArrowRight')show(cur+1);else if(e.key==='ArrowLeft')show(cur-1);});
+  var sx=null;var st=document.getElementById('lbStage');
+  st.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
+  st.addEventListener('touchend',function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>45)show(cur+(dx<0?1:-1));sx=null;});
+})();
+</script>
+</body>
+</html>

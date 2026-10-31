@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Inkjection</title>
+<meta name="description" content="Concept site for The Inkjection, a stationery brand designed by Amena Sahmoud.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Gochi+Hand&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#121212; --black-2:#1c1c1c; --paper:#f4f2ee; --white:#fff;
+  --pink:#ec8fc8; --blue:#1f8fd6; --orange:#f28a22; --red:#d6262b; --navy:#3b4bb8;
+  --muted:#9a9a9a; --line:rgba(255,255,255,.12);
+  --img:url("https://framerusercontent.com/images/MiAsDD3RH199cN3HCAB3XjO8plk.png");
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--black);color:var(--white);font:17px/1.55 "Space Grotesk",system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.hand{font-family:"Gochi Hand",cursive}
+.display{font-family:"Bungee",system-ui,sans-serif;font-weight:400;letter-spacing:.01em;line-height:.95}
+
+/* logo lockup, rebuilt from the box label */
+.logo{display:inline-flex;align-items:stretch;border:2px solid currentColor;text-decoration:none;color:var(--white);line-height:1}
+.logo .mark{width:40px;display:grid;place-items:center;border-right:2px solid currentColor}
+.logo .words{padding:5px 10px;text-align:center}
+.logo .the{font-size:9px;letter-spacing:.4em;display:block;margin-bottom:2px}
+.logo .name{font:700 17px/1 "Space Grotesk",sans-serif;letter-spacing:.06em}
+.logo .egypt{font-size:7px;letter-spacing:.35em;display:block;margin-top:3px}
+
+/* nav */
+header.nav{position:sticky;top:0;z-index:20;background:rgba(18,18,18,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:70px;gap:16px}
+header.nav nav{display:flex;gap:26px;font-weight:500;font-size:15px}
+header.nav nav a{text-decoration:none;opacity:.8}
+header.nav nav a:hover{opacity:1;color:var(--pink)}
+.btn{display:inline-flex;align-items:center;gap:8px;font:700 15px "Space Grotesk",sans-serif;padding:12px 20px;border-radius:999px;border:2px solid var(--white);background:var(--white);color:var(--black);text-decoration:none;cursor:pointer;transition:transform .15s,background .15s,color .15s}
+.btn:hover{transform:translateY(-2px);background:var(--pink);border-color:var(--pink)}
+.btn.ghost{background:transparent;color:var(--white)}
+.btn.ghost:hover{background:var(--white);color:var(--black);border-color:var(--white)}
+
+/* hero */
+.hero{position:relative;padding:72px 0 96px;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.eyebrow{font-size:13px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin:0 0 18px}
+.burst{position:relative;display:inline-block;padding:52px 120px;margin:0 0 6px -50px;max-width:100%}
+.burst::before{content:"";position:absolute;inset:0;background:var(--pink);
+  clip-path:polygon(50% 0,60% 22%,84% 6%,76% 32%,100% 34%,80% 52%,98% 74%,72% 70%,70% 100%,52% 78%,32% 98%,30% 72%,2% 82%,20% 56%,0 36%,26% 32%,16% 6%,40% 20%);
+  transform:rotate(-4deg)}
+.burst span{position:relative;color:var(--black);font-size:clamp(30px,5.2vw,72px);white-space:nowrap;display:block;transform:rotate(-4deg)}
+.burst .zap{position:absolute;height:4px;background:var(--blue);border-radius:2px}
+.hero h1{margin:0;font-weight:400}
+.hero .tag{font-size:clamp(34px,4.6vw,56px);line-height:1;margin:6px 0 20px;color:var(--white)}
+.hero p.lead{font-size:19px;max-width:30em;color:#d6d6d6;margin:0 0 30px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.hero-img{position:relative;background:var(--paper);border-radius:28px;padding:18px;transform:rotate(1.5deg);box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.hero-img img{border-radius:16px;width:100%;height:auto}
+.hero-img .sticker{position:absolute;left:-26px;bottom:34px;background:var(--orange);color:var(--black);padding:10px 16px;font-size:22px;transform:rotate(-8deg);border-radius:6px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+
+.star{position:absolute;pointer-events:none}
+.star svg{width:100%;height:100%;display:block}
+
+/* pencil strip divider */
+.strip{display:grid;grid-template-columns:repeat(7,1fr);height:18px}
+.strip i{display:block}
+
+/* section */
+section{position:relative}
+.sec{padding:100px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:48px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(36px,5vw,64px);margin:0}
+.sec-head p{max-width:30em;color:#cfcfcf;margin:0}
+.light{background:var(--paper);color:var(--black)}
+.light .sec-head p{color:#555}
+
+/* kit */
+.kit{display:grid;grid-template-columns:1fr 1.25fr;gap:24px}
+.kit .col{display:grid;gap:24px}
+.card{background:var(--white);border-radius:24px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;box-shadow:0 2px 0 rgba(0,0,0,.04)}
+.card:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:0 22px 50px rgba(0,0,0,.14)}
+.crop{background-image:var(--img);background-repeat:no-repeat;background-color:#fff;width:100%;flex-shrink:0}
+.crop.pencilbox{aspect-ratio:445/1230;background-size:269.7% auto;background-position:10.6% 59%}
+.crop.notebook{aspect-ratio:640/440;background-size:187.5% auto;background-position:92.9% 17%}
+.crop.bag{aspect-ratio:500/760;background-size:240% auto;background-position:88.6% 86.5%}
+.card .body{padding:22px 26px 26px;border-top:1px solid #eee}
+.card .kind{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#888}
+.card h3{font-family:"Bungee",sans-serif;font-weight:400;font-size:26px;margin:6px 0 8px}
+.card p{margin:0;color:#444;font-size:16px}
+.pill{display:inline-block;margin-top:14px;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:700;background:var(--black);color:var(--white)}
+.kit-pencils .body{flex:1}
+.swatches{display:flex;gap:6px;margin-top:16px;flex-wrap:wrap}
+.swatches i{width:18px;height:44px;border-radius:9px 9px 3px 3px;display:block}
+
+/* sketch pad */
+.pad-sec{background:var(--black)}
+.pad{display:grid;grid-template-columns:150px 1fr;gap:24px;align-items:stretch}
+.tray{background:var(--black-2);border:1px solid var(--line);border-radius:22px;padding:18px 14px;display:flex;flex-direction:column;gap:18px}
+.tray h4{margin:0;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-align:center}
+.pencils{display:flex;justify-content:center;gap:6px;height:190px;align-items:flex-end}
+.pencil{width:14px;height:150px;border:0;padding:0;cursor:pointer;position:relative;background:var(--c);border-radius:2px 2px 3px 3px;transition:height .18s, transform .18s}
+.pencil::before{content:"";position:absolute;left:0;right:0;top:-18px;height:18px;background:linear-gradient(var(--c) 0 30%, #e9c9a0 30%);clip-path:polygon(50% 0,100% 100%,0 100%)}
+.pencil:hover{height:162px}
+.pencil.on{height:178px}
+.pencil:focus-visible{outline:2px solid var(--white);outline-offset:4px}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tool{background:transparent;color:var(--white);border:1px solid var(--line);border-radius:12px;padding:10px 4px;font:600 13px "Space Grotesk",sans-serif;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
+.tool svg{width:22px;height:22px}
+.tool.on{background:var(--white);color:var(--black);border-color:var(--white)}
+.tool:hover{border-color:var(--pink)}
+.size{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);text-align:center}
+.size input{width:100%;accent-color:var(--pink)}
+.canvas-box{position:relative;border-radius:22px;overflow:hidden;background:#151515;border:1px solid var(--line);min-height:520px;touch-action:none}
+.canvas-box canvas{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair}
+.canvas-box .hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;color:#5d5d5d;font-size:30px;pointer-events:none;transition:opacity .3s;width:90%}
+.canvas-box .hint small{display:block;font:14px "Space Grotesk",sans-serif;margin-top:6px}
+.canvas-box .corner{position:absolute;right:16px;bottom:14px;pointer-events:none;opacity:.85}
+.pad-actions{display:flex;gap:10px;margin-top:16px;justify-content:flex-end;flex-wrap:wrap}
+
+/* palette */
+.palette{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.sw{border:0;border-radius:18px;height:170px;padding:14px;text-align:left;display:flex;flex-direction:column;justify-content:flex-end;cursor:pointer;font:600 14px "Space Grotesk",sans-serif;color:var(--black);transition:transform .15s}
+.sw:hover{transform:translateY(-4px)}
+.sw b{font-family:"Bungee";font-weight:400;font-size:15px;display:block}
+.sw.dark{color:var(--white)}
+.type-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:14px}
+.type{background:var(--white);border-radius:18px;padding:22px}
+.type .k{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#888}
+.type .s{font-size:34px;margin-top:8px;line-height:1.1}
+
+/* manifesto */
+.manifesto{padding:110px 0;text-align:center;overflow:hidden}
+.manifesto p{font-size:clamp(30px,5vw,68px);margin:0 auto;max-width:15em;line-height:1.05}
+.manifesto em{font-style:normal;color:var(--pink)}
+.manifesto .hand{display:block;color:var(--orange);font-size:clamp(26px,3vw,38px);margin-top:20px}
+
+footer{border-top:1px solid var(--line);padding:40px 0 48px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+footer a{color:var(--white)}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--white);color:var(--black);padding:12px 20px;border-radius:999px;font-weight:700;font-size:14px;transition:transform .25s;z-index:50}
+.toast.show{transform:translate(-50%,0)}
+
+@media (max-width:960px){
+  .hero .wrap{grid-template-columns:1fr}
+  .hero-img{max-width:520px;margin:0 auto}
+  .kit{grid-template-columns:1fr}
+  .palette{grid-template-columns:repeat(3,1fr)}
+  header.nav nav{display:none}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  .hero{padding:44px 0 64px}
+  .burst{padding:34px 46px;margin-left:-14px}
+  .hero > .star:first-child{display:none}
+  .hero-img .sticker{left:-6px;font-size:18px}
+  .sec{padding:70px 0}
+  .crop.pencilbox{aspect-ratio:445/760;background-position:10.6% 40%}
+  .pad{grid-template-columns:1fr}
+  .tray{flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;padding:14px}
+  .tray h4{width:100%}
+  .pencils{height:120px}
+  .pencil{height:90px;width:16px}
+  .pencil:hover{height:96px}
+  .pencil.on{height:110px}
+  .tools{grid-template-columns:repeat(2,64px)}
+  .size{width:140px}
+  .canvas-box{min-height:420px}
+  .palette{grid-template-columns:repeat(2,1fr)}
+  .sw{height:120px}
+  .type-row{grid-template-columns:1fr}
+  header.nav .btn{padding:9px 14px;font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="The Inkjection home">
+      <span class="mark" aria-hidden="true">
+        <svg width="24" height="28" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c3 4 4 6 4 8a4 4 0 0 1-8 0c0-2 1-4 4-8z" fill="currentColor"/><path d="M5 18h14v8H5z"/><path d="M8 18v-3h8v3"/></svg>
+      </span>
+      <span class="words"><span class="the">THE</span><span class="name">INKJECTION</span><span class="egypt">MADE IN EGYPT</span></span>
+    </a>
+    <nav aria-label="Primary">
+      <a href="#kit">The kit</a>
+      <a href="#pad">Sketch pad</a>
+      <a href="#brand">Brand</a>
+    </nav>
+    <a class="btn" href="#pad">Try the pencils</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="star" style="width:70px;height:70px;left:4%;top:40px;transform:rotate(12deg)"><svg viewBox="0 0 100 100"><polygon fill="#1f8fd6" points="50,2 62,38 98,38 69,60 80,96 50,74 20,96 31,60 2,38 38,38"/></svg></div>
+    <div class="star" style="width:46px;height:46px;right:3%;bottom:40px;transform:rotate(-18deg)"><svg viewBox="0 0 100 100"><polygon fill="#f28a22" points="50,2 62,38 98,38 69,60 80,96 50,74 20,96 31,60 2,38 38,38"/></svg></div>
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Stationery · Made in Egypt · Concept</p>
+        <h1>
+          <span class="burst display"><span>INKJECTION</span></span>
+        </h1>
+        <div class="tag hand">for the restless.</div>
+        <p class="lead">Colored pencils, notebooks and the bag to carry them in, wrapped in matte black and loud graffiti bursts. A stationery brand for people whose ideas don't sit still.</p>
+        <div class="ctas">
+          <a class="btn" href="#kit">See the kit</a>
+          <a class="btn ghost" href="#pad">Draw something</a>
+        </div>
+      </div>
+      <div class="hero-img">
+        <img src="https://framerusercontent.com/images/MiAsDD3RH199cN3HCAB3XjO8plk.png" alt="The Inkjection packaging: a colored pencil box, a notebook mailer box and a black shopping bag" width="1200" height="1500">
+        <div class="sticker hand">made in Egypt ★</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip" aria-hidden="true">
+    <i style="background:#e5531f"></i><i style="background:#f3cf0b"></i><i style="background:#d0161f"></i><i style="background:#5f8a3b"></i><i style="background:#1f5bc4"></i><i style="background:#177a3d"></i><i style="background:#f6a99a"></i>
+  </div>
+
+  <section class="sec light" id="kit">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="display">The kit</h2>
+        <p>Three pieces, one attitude. Every pack is black, every label is the same stamped lockup, and every product gets its own burst of hand-drawn lettering.</p>
+      </div>
+      <div class="kit">
+        <article class="card kit-pencils">
+          <div class="crop pencilbox" role="img" aria-label="Tall black box with a window showing colored pencils, a pink burst reading PENCILS"></div>
+          <div class="body">
+            <span class="kind">01 · Pencils</span>
+            <h3>Colored Pencils</h3>
+            <p>A tall black sleeve with a cut-out window, so the colors do the selling. The pink "PENCILS" burst tears up through the window line, and the box reads "9 Colored Pencils, for the restless."</p>
+            <div class="swatches" aria-label="Pencil colors visible on the box">
+              <i style="background:#e5531f"></i><i style="background:#f3cf0b"></i><i style="background:#d0161f"></i><i style="background:#5f8a3b"></i><i style="background:#1f5bc4"></i><i style="background:#177a3d"></i><i style="background:#f6a99a"></i>
+            </div>
+            <span class="pill" style="align-self:flex-start">Concept product</span>
+          </div>
+        </article>
+        <div class="col">
+          <article class="card">
+            <div class="crop notebook" role="img" aria-label="Black mailer box with a pink and blue NOTEBOOK burst and an orange star"></div>
+            <div class="body">
+              <span class="kind">02 · Notebook</span>
+              <h3>Notebook</h3>
+              <p>Ships in a flat black mailer. The lid carries the "NOTEBOOK" burst in pink with blue speed lines, and an orange star wraps the corner.</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="crop bag" role="img" aria-label="Black shopping bag with the Inkjection logo and a gusset covered in pink, blue, orange and red stars"></div>
+            <div class="body">
+              <span class="kind">03 · Carry</span>
+              <h3>The Bag</h3>
+              <p>Quiet on the front: just the lockup and "for the restless." The side gusset is where it gets loud, stacked with pink, blue, orange and red stars.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec pad-sec" id="pad">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="display">Sketch pad</h2>
+        <p>Pick a pencil from the box and draw. Switch to the star stamp to slap stars around like the bag's gusset. Save your page when you're done.</p>
+      </div>
+      <div class="pad">
+        <aside class="tray" aria-label="Drawing tools">
+          <h4>Pencils</h4>
+          <div class="pencils" id="pencils" role="radiogroup" aria-label="Pencil color"></div>
+          <div class="tools">
+            <button class="tool on" data-tool="pencil" type="button" aria-pressed="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg>Draw</button>
+            <button class="tool" data-tool="star" type="button" aria-pressed="false">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15,9 22,9 16.5,13.5 18.5,21 12,16.5 5.5,21 7.5,13.5 2,9 9,9"/></svg>Stars</button>
+          </div>
+          <label class="size">Size
+            <input type="range" id="size" min="2" max="28" value="7">
+          </label>
+        </aside>
+        <div>
+          <div class="canvas-box" id="box">
+            <canvas id="cv" aria-label="Drawing canvas"></canvas>
+            <div class="hint hand" id="hint">draw something restless<small>click or touch and drag</small></div>
+            <div class="corner logo" aria-hidden="true" style="transform:scale(.8);transform-origin:right bottom">
+              <span class="mark"><svg width="24" height="28" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c3 4 4 6 4 8a4 4 0 0 1-8 0c0-2 1-4 4-8z" fill="currentColor"/><path d="M5 18h14v8H5z"/><path d="M8 18v-3h8v3"/></svg></span>
+              <span class="words"><span class="the">THE</span><span class="name">INKJECTION</span><span class="egypt">MADE IN EGYPT</span></span>
+            </div>
+          </div>
+          <div class="pad-actions">
+            <button class="btn ghost" id="undo" type="button">Undo</button>
+            <button class="btn ghost" id="clear" type="button">Clear page</button>
+            <button class="btn" id="save" type="button">Save as PNG</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec light" id="brand">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="display">Brand kit</h2>
+        <p>Pulled straight from the packaging. Tap a swatch to copy its hex.</p>
+      </div>
+      <div class="palette" id="palette"></div>
+      <div class="type-row">
+        <div class="type"><div class="k">Bursts</div><div class="s display">PENCILS</div><p style="margin:8px 0 0;color:#555;font-size:14px">Hand-cut graffiti lettering inside a jagged star, one per product.</p></div>
+        <div class="type"><div class="k">Voice</div><div class="s hand">for the restless</div><p style="margin:8px 0 0;color:#555;font-size:14px">Loose, handwritten, lowercase. Always small next to the burst.</p></div>
+        <div class="type"><div class="k">Lockup</div><div class="s" style="font-weight:700;letter-spacing:.06em;font-size:28px">THE INKJECTION</div><p style="margin:8px 0 0;color:#555;font-size:14px">Boxed stamp with the ink-bottle mark and "Made in Egypt."</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="manifesto">
+    <div class="star" style="width:90px;height:90px;left:8%;top:30px;transform:rotate(-14deg)"><svg viewBox="0 0 100 100"><polygon fill="#ec8fc8" points="50,2 62,38 98,38 69,60 80,96 50,74 20,96 31,60 2,38 38,38"/></svg></div>
+    <div class="star" style="width:60px;height:60px;right:10%;bottom:40px;transform:rotate(20deg)"><svg viewBox="0 0 100 100"><polygon fill="#1f8fd6" points="50,2 62,38 98,38 69,60 80,96 50,74 20,96 31,60 2,38 38,38"/></svg></div>
+    <div class="wrap">
+      <p class="display">Ideas don't wait for a <em>clean page.</em></p>
+      <span class="hand">so neither should you.</span>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Concept demo built from Amena Sahmoud's Inkjection design · <a href="https://www.amenasahmoud.com">amenasahmoud.com</a></span>
+    <span>Not a real store. Products shown are design concepts.</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  var PENCILS=[
+    {n:"Orange",c:"#e5531f"},{n:"Yellow",c:"#f3cf0b"},{n:"Red",c:"#d0161f"},
+    {n:"Olive",c:"#5f8a3b"},{n:"Blue",c:"#1f5bc4"},{n:"Green",c:"#177a3d"},{n:"Peach",c:"#f6a99a"}
+  ];
+  var STAR_COLORS=["#ec8fc8","#1f8fd6","#f28a22","#d6262b","#3b4bb8"];
+  var color=PENCILS[6].c, tool="pencil";
+
+  // pencils tray
+  var tray=document.getElementById("pencils");
+  PENCILS.forEach(function(p,i){
+    var b=document.createElement("button");
+    b.className="pencil"+(i===6?" on":"");b.type="button";
+    b.style.setProperty("--c",p.c);
+    b.setAttribute("role","radio");b.setAttribute("aria-checked",i===6?"true":"false");
+    b.setAttribute("aria-label",p.n+" pencil");b.title=p.n;
+    b.addEventListener("click",function(){
+      color=p.c;
+      tray.querySelectorAll(".pencil").forEach(function(x){x.classList.remove("on");x.setAttribute("aria-checked","false")});
+      b.classList.add("on");b.setAttribute("aria-checked","true");
+      setTool("pencil");
+    });
+    tray.appendChild(b);
+  });
+
+  var toolBtns=document.querySelectorAll(".tool");
+  function setTool(t){tool=t;toolBtns.forEach(function(b){var on=b.dataset.tool===t;b.classList.toggle("on",on);b.setAttribute("aria-pressed",on)})}
+  toolBtns.forEach(function(b){b.addEventListener("click",function(){setTool(b.dataset.tool)})});
+
+  // canvas
+  var box=document.getElementById("box"),cv=document.getElementById("cv"),ctx=cv.getContext("2d");
+  var hint=document.getElementById("hint"),sizeEl=document.getElementById("size");
+  var history=[],dpr=1;
+  function resize(){
+    var r=box.getBoundingClientRect();dpr=window.devicePixelRatio||1;
+    var snap=cv.width?cv.toDataURL():null;
+    cv.width=Math.round(r.width*dpr);cv.height=Math.round(r.height*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    paintBg();
+    if(snap){var im=new Image();im.onload=function(){ctx.drawImage(im,0,0,r.width,r.height)};im.src=snap}
+  }
+  function paintBg(){
+    var w=cv.width/dpr,h=cv.height/dpr;
+    ctx.fillStyle="#151515";ctx.fillRect(0,0,w,h);
+    ctx.fillStyle="rgba(255,255,255,.05)";
+    for(var x=14;x<w;x+=22)for(var y=14;y<h;y+=22){ctx.beginPath();ctx.arc(x,y,1,0,Math.PI*2);ctx.fill()}
+  }
+  function pushHistory(){try{history.push(ctx.getImageData(0,0,cv.width,cv.height));if(history.length>25)history.shift()}catch(e){}}
+  function pos(e){var r=cv.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}
+
+  function star(x,y,r,rot,fill){
+    ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.beginPath();
+    for(var i=0;i<10;i++){var rr=i%2?r*.45:r,a=-Math.PI/2+i*Math.PI/5;ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr)}
+    ctx.closePath();ctx.fillStyle=fill;ctx.fill();ctx.restore();
+  }
+
+  var drawing=false,last=null,lastStar=null;
+  function hideHint(){hint.style.opacity=0}
+  cv.addEventListener("pointerdown",function(e){
+    e.preventDefault();cv.setPointerCapture(e.pointerId);pushHistory();hideHint();
+    drawing=true;last=pos(e);
+    if(tool==="star"){stampAt(last);lastStar=last}
+    else{ctx.fillStyle=color;ctx.beginPath();ctx.arc(last.x,last.y,sizeEl.value/2,0,Math.PI*2);ctx.fill()}
+  });
+  cv.addEventListener("pointermove",function(e){
+    if(!drawing)return;var p=pos(e);
+    if(tool==="star"){
+      if(Math.hypot(p.x-lastStar.x,p.y-lastStar.y)>sizeEl.value*3.2+14){stampAt(p);lastStar=p}
+    }else{
+      // pencil texture: main stroke + a few grainy offsets
+      var s=+sizeEl.value;
+      ctx.lineCap="round";ctx.lineJoin="round";ctx.strokeStyle=color;
+      ctx.globalAlpha=.92;ctx.lineWidth=s;ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(p.x,p.y);ctx.stroke();
+      ctx.globalAlpha=.35;ctx.lineWidth=Math.max(1,s*.25);
+      for(var k=0;k<3;k++){var ox=(Math.random()-.5)*s*.9,oy=(Math.random()-.5)*s*.9;ctx.beginPath();ctx.moveTo(last.x+ox,last.y+oy);ctx.lineTo(p.x+ox,p.y+oy);ctx.stroke()}
+      ctx.globalAlpha=1;
+    }
+    last=p;
+  });
+  function end(){drawing=false}
+  cv.addEventListener("pointerup",end);cv.addEventListener("pointercancel",end);
+  function stampAt(p){
+    var s=+sizeEl.value,r=10+s*1.6;
+    star(p.x,p.y,r,(Math.random()-.5)*.9,STAR_COLORS[Math.floor(Math.random()*STAR_COLORS.length)]);
+  }
+
+  document.getElementById("undo").addEventListener("click",function(){
+    var d=history.pop();if(d)ctx.putImageData(d,0,0);
+  });
+  document.getElementById("clear").addEventListener("click",function(){pushHistory();ctx.setTransform(dpr,0,0,dpr,0,0);paintBg();hint.style.opacity=1});
+  document.getElementById("save").addEventListener("click",function(){
+    var a=document.createElement("a");a.download="inkjection-sketch.png";a.href=cv.toDataURL("image/png");a.click();
+    toast("Saved your page");
+  });
+
+  var rt;window.addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(resize,150)});
+  resize();
+
+  // palette
+  var PAL=[
+    {n:"Ink Black",c:"#121212",d:1},{n:"Burst Pink",c:"#ec8fc8"},{n:"Speed Blue",c:"#1f8fd6",d:1},
+    {n:"Star Orange",c:"#f28a22"},{n:"Gusset Red",c:"#d6262b",d:1},{n:"Corner Navy",c:"#3b4bb8",d:1}
+  ];
+  var pal=document.getElementById("palette");
+  PAL.forEach(function(p){
+    var b=document.createElement("button");b.type="button";b.className="sw"+(p.d?" dark":"");
+    b.style.background=p.c;b.innerHTML="<b>"+p.n+"</b>"+p.c.toUpperCase();
+    b.addEventListener("click",function(){
+      var done=function(){toast("Copied "+p.c.toUpperCase())};
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(p.c).then(done,function(){toast(p.c.toUpperCase())})}else toast(p.c.toUpperCase());
+    });
+    pal.appendChild(b);
+  });
+
+  var tEl=document.getElementById("toast"),tt;
+  function toast(m){tEl.textContent=m;tEl.classList.add("show");clearTimeout(tt);tt=setTimeout(function(){tEl.classList.remove("show")},1600)}
+})();
+</script>
+</body>
+</html>

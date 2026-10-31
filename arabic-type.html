@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arabic Typography</title>
+<meta name="description" content="An interactive square-Kufic type specimen built around Amena Sahmoud's Arabic Typography piece.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400..700&family=Kufam:wght@400..900&family=Noto+Kufi+Arabic:wght@100..900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fff1d5;
+    --cream-2:#f8e6c3;
+    --navy:#141447;
+    --red:#bb202b;
+    --ink:#141447;
+    --muted:#5a587a;
+    --line:rgba(20,20,71,.16);
+    --unit:8px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:"Space Grotesk",system-ui,sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+  .ar{font-family:"Reem Kufi","Noto Kufi Arabic",sans-serif}
+
+  /* ---------- nav ---------- */
+  header.top{
+    position:sticky;top:0;z-index:20;
+    background:rgba(255,241,213,.92);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:700;letter-spacing:.02em}
+  .mark{width:28px;height:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+  .mark i{display:block;background:var(--navy);border-radius:2px}
+  .mark i:nth-child(5),.mark i:nth-child(9){background:var(--red)}
+  .mark i:nth-child(2),.mark i:nth-child(6){background:transparent}
+  nav.links{display:flex;gap:28px;font-size:14px;font-weight:500}
+  nav.links a{text-decoration:none;opacity:.75}
+  nav.links a:hover{opacity:1;color:var(--red)}
+
+  /* ---------- hero ---------- */
+  .hero{padding:72px 0 88px;position:relative}
+  .hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center}
+  .eyebrow{font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:28px;height:6px;background:var(--red);border-radius:3px}
+  h1{font-size:clamp(44px,6.4vw,92px);line-height:.95;letter-spacing:-.03em;margin:22px 0 10px;font-weight:700}
+  h1 .ar{display:block;font-size:.78em;color:var(--red);margin-top:10px;font-weight:700;letter-spacing:0;line-height:1.3}
+  .lede{font-size:clamp(17px,1.5vw,20px);max-width:34ch;color:var(--muted);margin-top:18px}
+  .cta{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:10px;height:50px;padding:0 24px;border-radius:999px;font-weight:700;font-size:15px;text-decoration:none;border:2px solid var(--navy);cursor:pointer;font-family:inherit;transition:transform .15s,background .15s,color .15s}
+  .btn.solid{background:var(--navy);color:var(--cream)}
+  .btn.solid:hover{background:var(--red);border-color:var(--red)}
+  .btn.ghost{background:transparent;color:var(--navy)}
+  .btn.ghost:hover{background:var(--navy);color:var(--cream)}
+  .btn:active{transform:scale(.97)}
+
+  .piece{position:relative}
+  .piece-frame{
+    position:relative;background:var(--cream-2);border-radius:20px;overflow:hidden;
+    box-shadow:0 1px 0 var(--line),0 30px 60px -30px rgba(20,20,71,.45);
+    aspect-ratio:923/1024;
+  }
+  .piece-frame img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+  .piece-frame:hover img{transform:scale(1.04)}
+  .piece-tag{
+    position:absolute;left:-18px;bottom:36px;background:var(--red);color:var(--cream);
+    padding:10px 16px;border-radius:10px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    box-shadow:0 12px 24px -12px rgba(187,32,43,.7)
+  }
+  .grid-deco{position:absolute;right:-26px;top:-26px;width:110px;height:110px;
+    background-image:radial-gradient(var(--navy) 3.5px,transparent 4px);background-size:22px 22px;opacity:.9;z-index:-1}
+
+  /* ---------- notes strip ---------- */
+  .strip{background:var(--navy);color:var(--cream);padding:56px 0}
+  .strip .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+  .note h3{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#f3a9ad;margin-bottom:10px}
+  .note p{font-size:17px;opacity:.92}
+  .note .num{font-family:"Reem Kufi",sans-serif;font-size:36px;font-weight:700;color:var(--cream);display:block;margin-bottom:6px}
+
+  /* ---------- section heads ---------- */
+  section.block{padding:96px 0}
+  .head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:40px;flex-wrap:wrap}
+  .head h2{font-size:clamp(32px,4vw,56px);line-height:1;letter-spacing:-.02em}
+  .head p{max-width:44ch;color:var(--muted)}
+
+  /* ---------- playground ---------- */
+  .play{display:grid;grid-template-columns:320px 1fr;gap:28px;align-items:stretch}
+  .panel{background:#fff8e8;border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:22px}
+  .field label,.field .lab{display:flex;justify-content:space-between;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;color:var(--navy)}
+  .field label output{color:var(--red);letter-spacing:0}
+  .text-in{
+    width:100%;height:52px;border-radius:12px;border:2px solid var(--navy);background:var(--cream);
+    padding:0 14px;font-size:20px;color:var(--navy);font-family:"Reem Kufi","Space Grotesk",sans-serif;outline:none;unicode-bidi:plaintext;
+  }
+  .text-in:focus{border-color:var(--red);box-shadow:0 0 0 4px rgba(187,32,43,.15)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{
+    border:1.5px solid var(--navy);background:transparent;color:var(--navy);border-radius:999px;
+    padding:6px 14px;font-size:15px;cursor:pointer;font-family:"Reem Kufi","Space Grotesk",sans-serif;transition:background .15s,color .15s
+  }
+  .chip:hover{background:rgba(20,20,71,.08)}
+  .chip[aria-pressed="true"]{background:var(--navy);color:var(--cream)}
+  input[type=range]{width:100%;accent-color:var(--red);height:24px}
+  .seg{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--navy);border-radius:12px;overflow:hidden}
+  .seg button{border:0;background:transparent;padding:10px 4px;font-size:13px;font-weight:700;color:var(--navy);cursor:pointer;font-family:inherit;line-height:1.2}
+  .seg button+button{border-left:2px solid var(--navy)}
+  .seg button[aria-pressed="true"]{background:var(--navy);color:var(--cream)}
+  .seg button small{display:block;font-family:var(--ff);font-weight:500;font-size:16px;margin-top:2px}
+  .swatches{display:flex;gap:10px;flex-wrap:wrap}
+  .sw{width:44px;height:44px;border-radius:12px;cursor:pointer;border:2px solid var(--line);position:relative;display:grid;place-items:center;padding:0}
+  .sw span{width:18px;height:18px;border-radius:5px;display:block}
+  .sw[aria-pressed="true"]{outline:3px solid var(--red);outline-offset:2px}
+  .toggle{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;cursor:pointer;user-select:none}
+  .toggle input{width:18px;height:18px;accent-color:var(--red)}
+
+  .stage{
+    position:relative;border-radius:20px;overflow:hidden;min-height:520px;
+    display:flex;flex-direction:column;border:1px solid var(--line);
+    transition:background .3s,color .3s;
+  }
+  .stage-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;gap:10px;flex-wrap:wrap;border-bottom:1px solid currentColor;border-color:color-mix(in srgb,currentColor 18%,transparent)}
+  .stage-bar .meta{opacity:.7}
+  .stage-bar .dirbadge{padding:4px 10px;border-radius:999px;border:1.5px solid currentColor}
+  .canvas{
+    flex:1;display:flex;align-items:center;justify-content:center;padding:40px 28px;position:relative;
+    background-size:var(--g,48px) var(--g,48px);
+  }
+  .canvas.grid{
+    background-image:
+      linear-gradient(to right,color-mix(in srgb,currentColor 12%,transparent) 1px,transparent 1px),
+      linear-gradient(to bottom,color-mix(in srgb,currentColor 12%,transparent) 1px,transparent 1px);
+  }
+  #preview{
+    font-family:"Reem Kufi",sans-serif;line-height:1.35;text-align:center;
+    overflow-wrap:anywhere;max-width:100%;outline:none;transition:color .25s;
+  }
+  .stage-foot{display:flex;gap:10px;padding:14px 20px;flex-wrap:wrap;border-top:1px solid color-mix(in srgb,currentColor 18%,transparent)}
+  .mini{font:inherit;font-size:13px;font-weight:700;border-radius:999px;padding:8px 14px;border:1.5px solid currentColor;background:transparent;color:inherit;cursor:pointer}
+  .mini:hover{background:color-mix(in srgb,currentColor 12%,transparent)}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--navy);color:var(--cream);padding:12px 18px;border-radius:12px;font-weight:700;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:50}
+  .toast.on{opacity:1;transform:translate(-50%,0)}
+
+  /* ---------- glyph grid ---------- */
+  .glyphs{display:grid;grid-template-columns:repeat(14,1fr);gap:10px;direction:rtl}
+  .glyph{
+    aspect-ratio:1;border-radius:14px;border:1.5px solid var(--line);background:#fff8e8;
+    font-family:"Reem Kufi",sans-serif;font-size:34px;font-weight:700;color:var(--navy);cursor:pointer;
+    display:grid;place-items:center;position:relative;transition:background .15s,color .15s,transform .15s
+  }
+  .glyph small{position:absolute;bottom:6px;left:0;right:0;font-family:"Space Grotesk",sans-serif;font-size:10px;font-weight:500;letter-spacing:.06em;opacity:.55;direction:ltr}
+  .glyph:hover{background:var(--navy);color:var(--cream);transform:translateY(-2px)}
+  .glyph:nth-child(7n+3):hover{background:var(--red)}
+  .hint{margin-top:16px;color:var(--muted);font-size:14px}
+
+  /* ---------- palette ---------- */
+  .palette{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .chipc{border-radius:20px;padding:28px;min-height:200px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--line)}
+  .chipc b{font-size:22px}
+  .chipc code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;opacity:.8}
+  .chipc .big{font-family:"Reem Kufi",sans-serif;font-size:64px;font-weight:700;line-height:1}
+
+  footer{border-top:1px solid var(--line);padding:36px 0 44px;font-size:14px;color:var(--muted)}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+  footer a{color:var(--navy);font-weight:700}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:960px){
+    .hero .wrap{grid-template-columns:1fr;gap:48px}
+    .piece{max-width:560px}
+    .play{grid-template-columns:1fr}
+    .stage{min-height:380px}
+    .strip .wrap{grid-template-columns:1fr;gap:28px}
+    .glyphs{grid-template-columns:repeat(7,1fr)}
+  }
+  @media (max-width:640px){
+    .wrap{padding:0 16px}
+    nav.links{display:none}
+    .hero{padding:40px 0 56px}
+    section.block{padding:64px 0}
+    .palette{grid-template-columns:1fr}
+    .chipc{min-height:140px}
+    .piece-tag{left:12px;bottom:12px}
+    .grid-deco{right:-8px;top:-14px;width:80px;height:80px}
+    .canvas{padding:28px 16px}
+    .panel{padding:18px}
+    .seg button{font-size:12px}
+    .glyphs{gap:6px}
+    .glyph{font-size:24px;border-radius:10px}
+    .glyph small{display:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>Arabic Typography</a>
+    <nav class="links">
+      <a href="#piece">The piece</a>
+      <a href="#play">Playground</a>
+      <a href="#letters">Letters</a>
+      <a href="#palette">Palette</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" id="piece">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Square Kufic · Lettering study</div>
+        <h1>Letters built<br>on a grid.<span class="ar" lang="ar" dir="rtl">حروف على شبكة</span></h1>
+        <p class="lede">A lettering piece by Amena Sahmoud: Arabic words locked into a single square, drawn in rounded strokes of navy and red on warm cream.</p>
+        <div class="cta">
+          <a class="btn solid" href="#play">Try the type playground</a>
+          <a class="btn ghost" href="https://www.amenasahmoud.com/project/graphicdesign" target="_blank" rel="noopener">See the portfolio</a>
+        </div>
+      </div>
+      <div class="piece">
+        <div class="grid-deco" aria-hidden="true"></div>
+        <div class="piece-frame">
+          <img src="https://framerusercontent.com/images/cVAdfTGd0jlMekWWXrGXoDU0hKg.png?scale-down-to=1024" alt="Arabic Typography, square Kufic lettering in navy and red by Amena Sahmoud">
+        </div>
+        <div class="piece-tag">Amena Sahmoud</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="strip" aria-label="What the piece does">
+    <div class="wrap">
+      <div class="note"><span class="num">01</span><h3>One square</h3><p>Every word is folded into a single block, so the text reads as an image first and a sentence second.</p></div>
+      <div class="note"><span class="num">02</span><h3>Two inks</h3><p>Navy carries the upper lines; red pools in the lower half, splitting the composition by color as well as by line.</p></div>
+      <div class="note"><span class="num">03</span><h3>Round ends</h3><p>Strokes keep an even weight with softened terminals, and the dots sit on the same grid as the letters.</p></div>
+    </div>
+  </section>
+
+  <section class="block" id="play">
+    <div class="wrap">
+      <div class="head">
+        <h2>Type playground</h2>
+        <p>Type any word in Arabic or English. Arabic text automatically switches the stage to right-to-left. The default face, Reem Kufi, is a geometric Kufic close in spirit to the piece.</p>
+      </div>
+
+      <div class="play">
+        <div class="panel" id="controls">
+          <div class="field">
+            <label for="txt">Your word <output id="dirOut">RTL</output></label>
+            <input id="txt" class="text-in" type="text" dir="auto" value="حروف" maxlength="60" autocomplete="off" spellcheck="false">
+          </div>
+          <div class="field">
+            <span class="lab">Presets</span>
+            <div class="chips" id="presets"></div>
+          </div>
+          <div class="field">
+            <span class="lab">Typeface</span>
+            <div class="seg" id="faces" role="group" aria-label="Typeface"></div>
+          </div>
+          <div class="field">
+            <label for="size">Size <output id="sizeOut">120px</output></label>
+            <input id="size" type="range" min="32" max="240" value="120">
+          </div>
+          <div class="field">
+            <label for="weight">Weight <output id="weightOut">700</output></label>
+            <input id="weight" type="range" min="400" max="700" step="1" value="700">
+          </div>
+          <div class="field">
+            <span class="lab">Color</span>
+            <div class="swatches" id="swatches"></div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="gridT" checked> Show Kufic grid</label>
+        </div>
+
+        <div class="stage" id="stage">
+          <div class="stage-bar">
+            <span class="meta" id="metaFace">Reem Kufi · 700</span>
+            <span class="dirbadge" id="dirBadge">RTL · العربية</span>
+          </div>
+          <div class="canvas grid" id="canvas">
+            <div id="preview" lang="ar" dir="rtl">حروف</div>
+          </div>
+          <div class="stage-foot">
+            <button class="mini" id="shuffle" type="button">Shuffle preset</button>
+            <button class="mini" id="copyCss" type="button">Copy CSS</button>
+            <button class="mini" id="clear" type="button">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="letters" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <h2>The letters</h2>
+        <p>The Arabic alphabet set in the current playground face. Tap a letter to add it to your word; Arabic joins the letters into their connected forms automatically.</p>
+      </div>
+      <div class="glyphs" id="glyphs"></div>
+      <p class="hint">Tip: tap a few letters in a row, for example ن then و then ر, to watch them connect into نور.</p>
+    </div>
+  </section>
+
+  <section class="block" id="palette" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <h2>Palette</h2>
+        <p>Three colors, sampled directly from the piece. Click a card to copy its hex value.</p>
+      </div>
+      <div class="palette">
+        <button class="chipc" data-hex="#141447" style="background:#141447;color:#fff1d5;text-align:left;cursor:pointer;font:inherit"><span class="big" lang="ar">حبر</span><span><b>Ink navy</b><br><code>#141447</code></span></button>
+        <button class="chipc" data-hex="#bb202b" style="background:#bb202b;color:#fff1d5;text-align:left;cursor:pointer;font:inherit"><span class="big" lang="ar">أحمر</span><span><b>Kufic red</b><br><code>#BB202B</code></span></button>
+        <button class="chipc" data-hex="#fff1d5" style="background:#fff1d5;color:#141447;text-align:left;cursor:pointer;font:inherit"><span class="big" lang="ar">ورق</span><span><b>Paper cream</b><br><code>#FFF1D5</code></span></button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Concept demo built from Amena Sahmoud's Arabic Typography design · <a href="https://www.amenasahmoud.com" target="_blank" rel="noopener">amenasahmoud.com</a></span>
+    <span>Fonts: Reem Kufi, Kufam, Noto Kufi Arabic via Google Fonts</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  var FACES=[
+    {id:"reem",name:"Reem Kufi",css:'"Reem Kufi"',min:400,max:700,sample:"ريم"},
+    {id:"kufam",name:"Kufam",css:'"Kufam"',min:400,max:900,sample:"كفم"},
+    {id:"noto",name:"Noto Kufi",css:'"Noto Kufi Arabic"',min:100,max:900,sample:"نوتو"}
+  ];
+  var PRESETS=["حروف","نور","سلام","قلب","بيت","Kufic","Amena"];
+  var COLORS=[
+    {name:"Navy on cream",fg:"#141447",bg:"#fff1d5"},
+    {name:"Red on cream",fg:"#bb202b",bg:"#fff1d5"},
+    {name:"Cream on navy",fg:"#fff1d5",bg:"#141447"},
+    {name:"Cream on red",fg:"#fff1d5",bg:"#bb202b"},
+    {name:"Red on navy",fg:"#e2394a",bg:"#141447"}
+  ];
+  var LETTERS=[["ا","alif"],["ب","bā"],["ت","tā"],["ث","thā"],["ج","jīm"],["ح","ḥā"],["خ","khā"],["د","dāl"],["ذ","dhāl"],["ر","rā"],["ز","zāy"],["س","sīn"],["ش","shīn"],["ص","ṣād"],["ض","ḍād"],["ط","ṭā"],["ظ","ẓā"],["ع","ʿayn"],["غ","ghayn"],["ف","fā"],["ق","qāf"],["ك","kāf"],["ل","lām"],["م","mīm"],["ن","nūn"],["ه","hā"],["و","wāw"],["ي","yā"]];
+
+  var $=function(id){return document.getElementById(id)};
+  var txt=$("txt"),preview=$("preview"),size=$("size"),weight=$("weight"),stage=$("stage"),canvas=$("canvas");
+  var state={face:FACES[0],color:COLORS[0]};
+  var AR=/[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/;
+
+  // presets
+  PRESETS.forEach(function(w){
+    var b=document.createElement("button");b.type="button";b.className="chip";b.textContent=w;
+    b.dir=AR.test(w)?"rtl":"ltr";
+    b.addEventListener("click",function(){txt.value=w;render();});
+    $("presets").appendChild(b);
+  });
+  // faces
+  FACES.forEach(function(f){
+    var b=document.createElement("button");b.type="button";
+    b.innerHTML=f.name+'<small style="font-family:'+f.css.replace(/"/g,"&quot;")+'" lang="ar">'+f.sample+'</small>';
+    b.setAttribute("aria-pressed",f===state.face);
+    b.addEventListener("click",function(){
+      state.face=f;
+      [].forEach.call($("faces").children,function(c){c.setAttribute("aria-pressed","false")});
+      b.setAttribute("aria-pressed","true");
+      weight.min=f.min;weight.max=f.max;
+      if(+weight.value>f.max)weight.value=f.max;
+      if(+weight.value<f.min)weight.value=f.min;
+      render();
+    });
+    $("faces").appendChild(b);
+  });
+  // colors
+  COLORS.forEach(function(c){
+    var b=document.createElement("button");b.type="button";b.className="sw";b.title=c.name;b.setAttribute("aria-label",c.name);
+    b.style.background=c.bg;b.innerHTML='<span style="background:'+c.fg+'"></span>';
+    b.setAttribute("aria-pressed",c===state.color);
+    b.addEventListener("click",function(){
+      state.color=c;
+      [].forEach.call($("swatches").children,function(x){x.setAttribute("aria-pressed","false")});
+      b.setAttribute("aria-pressed","true");render();
+    });
+    $("swatches").appendChild(b);
+  });
+  // glyphs
+  LETTERS.forEach(function(l){
+    var b=document.createElement("button");b.type="button";b.className="glyph";b.lang="ar";
+    b.innerHTML=l[0]+"<small>"+l[1]+"</small>";b.setAttribute("aria-label","Add "+l[1]);
+    b.addEventListener("click",function(){
+      var cur=txt.value;
+      if(!AR.test(cur))cur=""; // start a fresh Arabic word when switching scripts
+      txt.value=(cur+l[0]).slice(0,60);render();
+      toast("Added "+l[1]);
+    });
+    $("glyphs").appendChild(b);
+  });
+
+  function render(){
+    var v=txt.value;
+    var isAr=AR.test(v);
+    if(!v.trim()){v="اكتب كلمة";isAr=true;}
+    preview.textContent=v;
+    preview.dir=isAr?"rtl":"ltr";
+    preview.lang=isAr?"ar":"en";
+    var px=+size.value;
+    preview.style.fontSize=px+"px";
+    preview.style.fontWeight=weight.value;
+    preview.style.fontFamily=state.face.css+',"Noto Kufi Arabic","Space Grotesk",sans-serif';
+    preview.style.color=state.color.fg;
+    stage.style.background=state.color.bg;
+    stage.style.color=state.color.fg;
+    $("sizeOut").textContent=px+"px";
+    $("weightOut").textContent=weight.value;
+    $("metaFace").textContent=state.face.name+" · "+weight.value;
+    $("dirBadge").textContent=isAr?"RTL · العربية":"LTR · Latin";
+    $("dirOut").textContent=isAr?"RTL":"LTR";
+    canvas.style.setProperty("--g",Math.max(16,Math.round(px/2.5))+"px");
+    document.querySelectorAll(".glyph").forEach(function(g){g.style.fontFamily=state.face.css+',sans-serif'});
+    [].forEach.call($("presets").children,function(c){c.setAttribute("aria-pressed",c.textContent===v)});
+    // shrink to fit if overflowing
+    requestAnimationFrame(function(){
+      var w=preview.scrollWidth, a=canvas.clientWidth-32;
+      if(w>a && a>0){preview.style.fontSize=Math.max(24,Math.floor(px*a/w))+"px";}
+    });
+  }
+  txt.addEventListener("input",render);
+  size.addEventListener("input",render);
+  weight.addEventListener("input",render);
+  $("gridT").addEventListener("change",function(e){canvas.classList.toggle("grid",e.target.checked)});
+  $("shuffle").addEventListener("click",function(){
+    var opts=PRESETS.filter(function(p){return p!==txt.value});
+    txt.value=opts[Math.floor(Math.random()*opts.length)];
+    state.color=COLORS[Math.floor(Math.random()*COLORS.length)];
+    [].forEach.call($("swatches").children,function(x,i){x.setAttribute("aria-pressed",COLORS[i]===state.color)});
+    render();
+  });
+  $("clear").addEventListener("click",function(){txt.value="";render();txt.focus();});
+  $("copyCss").addEventListener("click",function(){
+    var css="font-family: "+state.face.css+", sans-serif;\nfont-size: "+size.value+"px;\nfont-weight: "+weight.value+";\ncolor: "+state.color.fg+";\nbackground: "+state.color.bg+";\ndirection: "+preview.dir+";";
+    copy(css,"CSS copied");
+  });
+  document.querySelectorAll(".chipc").forEach(function(c){
+    c.addEventListener("click",function(){copy(c.dataset.hex.toUpperCase(),c.dataset.hex.toUpperCase()+" copied")});
+  });
+  function copy(s,msg){
+    try{navigator.clipboard.writeText(s).then(function(){toast(msg)},function(){toast("Copy not allowed here")});}
+    catch(e){toast("Copy not allowed here")}
+  }
+  var tt;
+  function toast(m){var t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){t.classList.remove("on")},1400);}
+  window.addEventListener("resize",render);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(render);
+  render();
+})();
+</script>
+</body>
+</html>

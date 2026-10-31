@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Best Juice</title>
+<meta name="description" content="Concept brand site built from Amena Sahmoud's Best Juice rebranding.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Coiny&family=Montserrat:wght@400;500;600;700&family=Baloo+Bhaijaan+2:wght@700;800&family=Noto+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#0061D9; --red:#E52B08; --yellow:#FFBF26; --green:#85D62E; --orange:#E37D17;
+  --ink:#0B1530; --paper:#ffffff; --cream:#FFF8E8;
+  --board:url("https://framerusercontent.com/images/U9xEUL7hqU8sP6pycyPejeihomQ.webp");
+  --logo:url("https://framerusercontent.com/images/jwouIPiUafVTeH5G4vrscNSqqx0.png");
+  --accent:var(--green);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Montserrat,system-ui,sans-serif;color:var(--ink);background:var(--paper);overflow-x:hidden;line-height:1.55}
+.ar{font-family:"Baloo Bhaijaan 2","Noto Sans Arabic",sans-serif;direction:rtl}
+.display{font-family:Coiny,Montserrat,sans-serif;font-weight:400;line-height:1.02;letter-spacing:-.01em}
+.eyebrow{font-size:.74rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+img{max-width:100%;display:block}
+
+/* crops of her presentation board (2000x1500 reference grid) */
+.crop{background-image:var(--board);background-repeat:no-repeat}
+.crop-billboard{aspect-ratio:1020/648;background-size:196.08% auto;background-position:0% 20.77%}
+.crop-patterns{aspect-ratio:761/520;background-size:262.8% auto;background-position:63.84% 91.84%}
+.crop-stationery{aspect-ratio:791/520;background-size:252.8% auto;background-position:0% 91.84%}
+.crop-fruit{aspect-ratio:200/220;background-size:1000% auto;background-position-y:45.16%}
+.f-guava{background-position-x:65%}
+.f-orange{background-position-x:78.61%}
+.f-apple{background-position-x:91.39%}
+.logo-mark{background-image:var(--logo);background-repeat:no-repeat;aspect-ratio:620/890;background-size:322.6% auto;background-position:50% 25.4%}
+.logo-full{background-image:var(--logo);background-repeat:no-repeat;aspect-ratio:640/1195;background-size:312.5% auto;background-position:50% 49.2%}
+
+/* nav */
+nav{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid #e9edf5}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.brand .logo-mark{width:30px}
+.brand b{font-family:Coiny;font-weight:400;font-size:1.35rem;color:var(--blue)}
+.navlinks{display:flex;gap:26px;font-weight:600;font-size:.9rem}
+.navlinks a{color:var(--ink);text-decoration:none}
+.navlinks a:hover{color:var(--blue)}
+.cart-btn{display:flex;align-items:center;gap:8px;background:var(--blue);color:#fff;border-radius:999px;padding:9px 16px;font-weight:700;font-size:.88rem}
+.cart-btn .count{background:var(--yellow);color:var(--ink);border-radius:999px;min-width:22px;height:22px;display:grid;place-items:center;font-size:.78rem;transition:transform .25s}
+.cart-btn .count.bump{transform:scale(1.35)}
+
+/* hero */
+.hero{background:var(--blue);color:#fff;position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-top:72px;padding-bottom:84px;position:relative;z-index:2}
+.hero h1{font-size:clamp(2.8rem,6.6vw,5.6rem);margin:18px 0 6px}
+.hero h1 span{color:var(--yellow)}
+.hero .ar-tag{font-size:clamp(2rem,4.6vw,3.6rem);color:#fff;line-height:1.2;margin-bottom:22px;text-align:left}
+.hero p.lede{max-width:470px;font-size:1.05rem;opacity:.92}
+.hero .ctas{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:14px 24px;font-weight:700;text-decoration:none;font-size:.95rem;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-yellow{background:var(--yellow);color:var(--ink)}
+.btn-ghost{border:2px solid rgba(255,255,255,.7);color:#fff}
+.burst-stage{position:relative;aspect-ratio:1;display:grid;place-items:center}
+.burst{position:absolute;inset:0;background:var(--yellow);animation:spin 60s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-card{position:relative;width:52%;background:#fff;border-radius:28px;padding:22px 26px;box-shadow:0 24px 50px rgba(0,20,60,.35);transform:rotate(-4deg)}
+.hero-card .logo-full{width:100%}
+.squig{position:absolute;z-index:1;opacity:.95}
+.squig.s1{left:-40px;bottom:-30px;width:180px;height:180px;border:34px solid var(--green);border-radius:50%;border-right-color:transparent;transform:rotate(30deg)}
+.squig.s2{right:42%;top:24px;width:58px;height:58px;background:var(--red);border-radius:16px;transform:rotate(18deg)}
+
+/* marquee */
+.ticker{background:var(--yellow);overflow:hidden;white-space:nowrap;border-block:3px solid var(--ink)}
+.ticker div{display:inline-block;padding:14px 0;animation:tick 26s linear infinite;font-family:Coiny;font-size:1.25rem}
+.ticker span{margin:0 22px}
+.ticker .ar{font-size:1.4rem;display:inline-block}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* sections */
+section{padding:96px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:44px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(2.1rem,4.6vw,3.4rem)}
+.sec-head p{max-width:420px;color:#4a5570}
+
+/* flavor picker */
+#flavors{background:var(--cream)}
+.picker{display:grid;grid-template-columns:1fr 1fr;border-radius:32px;overflow:hidden;background:#fff;box-shadow:0 20px 50px rgba(11,21,48,.08)}
+.spot{background:var(--accent);position:relative;display:grid;place-items:center;padding:48px 30px;min-height:460px;transition:background .45s}
+.spot .ring{position:absolute;width:78%;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.28)}
+.spot .art-card{position:relative;width:min(64%,300px);background:#fff;border-radius:26px;padding:22px;box-shadow:0 18px 40px rgba(0,0,0,.18);transition:transform .45s}
+.spot .art-card.swap{transform:rotate(-8deg) scale(.9)}
+.spot .art-card .crop{width:100%;border-radius:12px}
+.spot .badge{position:absolute;top:22px;left:22px;background:#fff;border-radius:999px;padding:7px 14px;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.detail{padding:44px 44px 40px;display:flex;flex-direction:column}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:30px}
+.tab{padding:10px 16px;border-radius:999px;border:2px solid #e3e7ef;font-weight:700;font-size:.86rem;display:flex;align-items:center;gap:8px;transition:all .2s}
+.tab i{width:12px;height:12px;border-radius:50%;display:inline-block}
+.tab[aria-selected="true"]{border-color:var(--ink);background:var(--ink);color:#fff}
+.detail h3{font-size:clamp(2rem,3.6vw,2.8rem);color:var(--accent-ink,var(--ink));transition:color .3s}
+.detail .ar-name{font-size:1.9rem;text-align:left;margin:2px 0 16px}
+.detail p{color:#4a5570;max-width:420px}
+.notes{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 28px}
+.notes span{background:#f2f4f9;border-radius:8px;padding:6px 10px;font-size:.8rem;font-weight:600}
+.add-row{margin-top:auto;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.qty{display:flex;align-items:center;border:2px solid #e3e7ef;border-radius:999px}
+.qty button{width:42px;height:46px;font-size:1.3rem;font-weight:700}
+.qty output{min-width:28px;text-align:center;font-weight:700}
+.btn-add{background:var(--blue);color:#fff;border-radius:999px;padding:14px 24px;font-weight:700}
+.btn-add:hover{filter:brightness(1.1)}
+
+/* lineup */
+.lineup{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:28px}
+.mini{background:#fff;border-radius:24px;padding:22px;display:flex;gap:16px;align-items:center;cursor:pointer;border:3px solid transparent;transition:border-color .2s,transform .2s}
+.mini:hover{transform:translateY(-3px)}
+.mini.on{border-color:var(--ink)}
+.mini .crop{width:70px;flex:none}
+.mini b{display:block;font-family:Coiny;font-weight:400;font-size:1.15rem}
+.mini .ar{font-size:1.05rem;text-align:left}
+
+/* look */
+.look{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.tile{border-radius:26px;overflow:hidden;position:relative;background:#eef1f7}
+.tile .crop{width:100%;height:100%}
+.tile.big{grid-column:1/-1}
+.tile .crop-patterns,.tile .crop-stationery{aspect-ratio:761/520}
+.tile .label{position:absolute;left:16px;bottom:16px;background:#fff;border-radius:999px;padding:8px 14px;font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.palette{display:grid;grid-template-columns:repeat(5,1fr);margin-top:22px;border-radius:20px;overflow:hidden}
+.palette button{height:110px;color:#fff;font-weight:700;font-size:.78rem;text-align:left;padding:12px;display:flex;align-items:flex-end;transition:height .2s}
+.palette button:nth-child(3){color:var(--ink)}
+.palette button:hover{height:124px}
+.copied{position:fixed;left:50%;bottom:28px;transform:translate(-50%,120px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:999px;font-weight:600;font-size:.9rem;transition:transform .3s;z-index:60}
+.copied.show{transform:translate(-50%,0)}
+
+/* about */
+#about{background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.about h2{font-size:clamp(2.1rem,4.4vw,3.3rem);margin:14px 0 20px}
+.about h2 span{color:var(--yellow)}
+.about p{opacity:.85;margin-bottom:14px;max-width:520px}
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}
+.pillar{border:1.5px solid rgba(255,255,255,.18);border-radius:18px;padding:16px}
+.pillar b{display:block;font-size:.95rem;margin-bottom:4px}
+.pillar small{opacity:.7;font-size:.82rem}
+.type-card{background:#fff;color:var(--ink);border-radius:28px;padding:30px;display:grid;grid-template-columns:1fr 1fr;gap:26px 18px}
+.type-card .sample{font-size:2.2rem;line-height:1.1}
+.type-card small{display:block;margin-top:6px;font-size:.68rem;letter-spacing:.18em;font-weight:700;color:#6b7590;text-transform:uppercase}
+.type-card .ar{text-align:right}
+
+/* cart drawer */
+.scrim{position:fixed;inset:0;background:rgba(11,21,48,.45);opacity:0;pointer-events:none;transition:opacity .3s;z-index:40}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(420px,100%);background:#fff;z-index:50;transform:translateX(105%);transition:transform .35s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column}
+body.cart-open .scrim{opacity:1;pointer-events:auto}
+body.cart-open .drawer{transform:none}
+.drawer header{display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1px solid #eef1f7}
+.drawer header h3{font-family:Coiny;font-weight:400;font-size:1.5rem;color:var(--blue)}
+.drawer .close{font-size:1.6rem;width:40px;height:40px;border-radius:50%;background:#f2f4f9}
+.lines{flex:1;overflow:auto;padding:12px 24px}
+.line{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid #f0f2f7}
+.line .crop{width:52px;flex:none}
+.line .nm{flex:1}
+.line .nm b{display:block;font-size:.95rem}
+.line .nm small{color:#6b7590}
+.line .qty button{width:34px;height:36px;font-size:1.1rem}
+.empty{text-align:center;color:#6b7590;padding:50px 10px}
+.empty .logo-mark{width:60px;margin:0 auto 14px;opacity:.5}
+.pack{padding:18px 24px;border-top:1px solid #eef1f7;background:var(--cream)}
+.pack .meter{display:flex;gap:6px;margin:10px 0 6px}
+.pack .meter i{flex:1;height:14px;border-radius:5px;background:#e6e1d2;transition:background .3s}
+.pack small{color:#6b7590;font-size:.8rem}
+.pack .btn-add{width:100%;margin-top:14px}
+.pack .btn-add[disabled]{opacity:.45;cursor:not-allowed}
+
+footer{background:#fff;border-top:1px solid #eef1f7;padding:34px 0;font-size:.86rem;color:#4a5570}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+footer a{color:var(--blue);font-weight:600}
+
+@media (max-width:900px){
+  .navlinks{display:none}
+  .hero .wrap{grid-template-columns:1fr;padding-top:44px;padding-bottom:60px;gap:16px}
+  .burst-stage{max-width:380px;width:100%;margin:0 auto}
+  .picker,.about,.look{grid-template-columns:1fr}
+  .lineup{grid-template-columns:1fr}
+  .spot{min-height:340px}
+  .detail{padding:30px 22px}
+}
+@media (max-width:480px){
+  .wrap{padding:0 16px}
+  section{padding:64px 0}
+  .palette button{height:84px;font-size:.6rem;padding:8px 6px}
+  .palette button:hover{height:84px}
+  .type-card{padding:22px;gap:20px;grid-template-columns:1fr}
+  .type-card .ar{text-align:left}
+  .type-card .ar small{text-align:left}
+  .type-card .sample{font-size:1.6rem}
+  .pillars{grid-template-columns:1fr}
+  .cart-btn .lbl{display:none}
+}
+@media (prefers-reduced-motion:reduce){.burst,.ticker div{animation:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Best Juice home"><span class="logo-mark" role="img" aria-label="Best Juice B-with-straw logo"></span><b>Best</b></a>
+    <div class="navlinks"><a href="#flavors">Flavors</a><a href="#look">The new look</a><a href="#about">About</a></div>
+    <button class="cart-btn" id="openCart" aria-label="Open your pack"><span class="lbl">Your pack</span><span class="count" id="count">0</span></button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="squig s1"></div>
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Heritage Egyptian juice · new look</div>
+      <h1 class="display">Best is<br><span>the best.</span></h1>
+      <div class="ar ar-tag">بست هو البست</div>
+      <p class="lede">A familiar name in a bold new jacket: a straw-topped B, sunny colors, and fruit drawn from loops of Arabic letters.</p>
+      <div class="ctas">
+        <a class="btn btn-yellow" href="#flavors">Pick your flavor →</a>
+        <a class="btn btn-ghost" href="#look">See the identity</a>
+      </div>
+    </div>
+    <div class="burst-stage">
+      <div class="burst" id="burst"></div>
+      <div class="hero-card"><div class="logo-full" role="img" aria-label="Best Juice logo: blue B with red straw, Arabic wordmark"></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="ticker" aria-hidden="true"><div>
+  <span>Guava Nectar</span><span class="ar">نكتار الجوافة</span><span>Orange Nectar</span><span class="ar">نكتار البرتقال</span><span>Apple Juice</span><span class="ar">عصير التفاح</span><span class="ar">شكل جديد</span>
+  <span>Guava Nectar</span><span class="ar">نكتار الجوافة</span><span>Orange Nectar</span><span class="ar">نكتار البرتقال</span><span>Apple Juice</span><span class="ar">عصير التفاح</span><span class="ar">شكل جديد</span>
+</div></div>
+
+<section id="flavors">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow" style="color:var(--red)">The lineup</div><h2 class="display">Pick a flavor.<br>Build a pack.</h2></div>
+      <p>Each fruit on the packaging is drawn from looping Arabic letterforms. Tap one to see it up close, then add it to your pack.</p>
+    </div>
+
+    <div class="picker">
+      <div class="spot" id="spot">
+        <span class="badge" id="badge">Flavor art</span>
+        <div class="ring"></div>
+        <div class="art-card" id="artCard"><div class="crop crop-fruit f-guava" id="spotArt" role="img" aria-label="Guava flavor art"></div></div>
+      </div>
+      <div class="detail">
+        <div class="tabs" role="tablist" id="tabs"></div>
+        <h3 class="display" id="fName">Guava Nectar</h3>
+        <div class="ar ar-name" id="fAr">نكتار الجوافة</div>
+        <p id="fDesc"></p>
+        <div class="notes" id="fNotes"></div>
+        <div class="add-row">
+          <div class="qty"><button id="minus" aria-label="Fewer">−</button><output id="q">1</output><button id="plus" aria-label="More">+</button></div>
+          <button class="btn-add" id="add">Add to pack</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="lineup" id="lineup"></div>
+  </div>
+</section>
+
+<section id="look">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow" style="color:var(--blue)">The identity</div><h2 class="display">A new look,<br>everywhere.</h2></div>
+      <p>From a street billboard announcing <span class="ar" style="font-size:1.15em">شكل جديد</span> ("new look") to letterhead and repeating patterns built from the B and its straw.</p>
+    </div>
+    <div class="look">
+      <div class="tile big"><div class="crop crop-billboard" role="img" aria-label="Billboard mockup: Best Juice logo and pouch with Arabic headline"></div><span class="label">Billboard</span></div>
+      <div class="tile"><div class="crop crop-patterns" role="img" aria-label="Brand patterns in blue, yellow and green"></div><span class="label">Patterns</span></div>
+      <div class="tile"><div class="crop crop-stationery" role="img" aria-label="Stationery mockup: letterhead, envelope, business cards"></div><span class="label">Stationery</span></div>
+    </div>
+    <div class="palette" id="palette"></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about">
+    <div>
+      <div class="eyebrow" style="color:var(--green)">About the rebrand</div>
+      <h2 class="display">Heritage taste,<br><span>new energy.</span></h2>
+      <p>This rebrand gives a heritage Egyptian juice a louder, friendlier voice. The B doubles as a juice box with a straw, and the Arabic wordmark carries the tagline "Best is the best."</p>
+      <p>Bilingual from the start: Coiny and Montserrat for Latin, a rounded display face and Noto Sans for Arabic, so both scripts feel like one family.</p>
+      <div class="pillars">
+        <div class="pillar"><b>The straw B</b><small>Logo, app icon and reversed lockups</small></div>
+        <div class="pillar"><b>Letter-fruit</b><small>Flavor art built from Arabic letters</small></div>
+        <div class="pillar"><b>Five colors</b><small>Blue, red, yellow, green, orange</small></div>
+        <div class="pillar"><b>Two scripts</b><small>Latin and Arabic side by side</small></div>
+      </div>
+    </div>
+    <div class="type-card">
+      <div><div class="sample display">Coiny</div><small>Display · Latin</small></div>
+      <div class="ar"><div class="sample" style="font-weight:800">بست هو البست</div><small style="direction:ltr">Display · Arabic</small></div>
+      <div><div class="sample" style="font-family:Montserrat;font-weight:500">Montserrat</div><small>Body · Latin</small></div>
+      <div class="ar"><div class="sample" style="font-family:'Noto Sans Arabic';font-weight:400">نوتو سانز</div><small style="direction:ltr">Body · Arabic</small></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Concept demo built from Amena Sahmoud's Best Juice rebrand · <a href="https://www.amenasahmoud.com" target="_blank" rel="noopener">amenasahmoud.com</a></span>
+    <span>Placeholder copy. No real products are sold here.</span>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Your pack">
+  <header><h3>Your pack</h3><button class="close" id="closeCart" aria-label="Close">×</button></header>
+  <div class="lines" id="lines"></div>
+  <div class="pack">
+    <b id="packTitle">Build a 6-pack</b>
+    <div class="meter" id="meter"></div>
+    <small id="packHint">Mix any flavors. Fill all six slots.</small>
+    <button class="btn-add" id="checkout" disabled>Pack it up</button>
+  </div>
+</aside>
+<div class="copied" id="toast"></div>
+
+<script>
+const FLAVORS = [
+  {id:'guava', name:'Guava Nectar', ar:'نكتار الجوافة', color:'#85D62E', cls:'f-guava',
+   desc:'Placeholder concept copy: a smooth, mellow pour drawn in fresh green, with the fruit sketched from swirling letter loops.',
+   notes:['Green letter-fruit','Red straw accent','Nectar']},
+  {id:'orange', name:'Orange Nectar', ar:'نكتار البرتقال', color:'#E37D17', cls:'f-orange',
+   desc:'Placeholder concept copy: the sunny one. Orange letterforms tumble into a fruit shape, topped with a green straw.',
+   notes:['Orange letter-fruit','Green straw accent','Nectar']},
+  {id:'apple', name:'Apple Juice', ar:'عصير التفاح', color:'#E52B08', cls:'f-apple',
+   desc:'Placeholder concept copy: crisp and bright, rendered in signature red with a blue straw on top.',
+   notes:['Red letter-fruit','Blue straw accent','Juice']}
+];
+const PACK = 6;
+const cart = {};
+let current = 'guava', q = 1;
+const $ = id => document.getElementById(id);
+
+// starburst
+(function(){
+  const pts=[], n=14;
+  for(let i=0;i<n*2;i++){const r=i%2?33:50, a=Math.PI*i/n;
+    pts.push((50+r*Math.cos(a)).toFixed(1)+'% '+(50+r*Math.sin(a)).toFixed(1)+'%');}
+  $('burst').style.clipPath='polygon('+pts.join(',')+')';
+})();
+
+// tabs + lineup
+FLAVORS.forEach(f=>{
+  const t=document.createElement('button');
+  t.className='tab';t.role='tab';t.dataset.id=f.id;
+  t.innerHTML=`<i style="background:${f.color}"></i>${f.name}`;
+  t.onclick=()=>select(f.id);
+  $('tabs').appendChild(t);
+  const m=document.createElement('div');
+  m.className='mini';m.dataset.id=f.id;m.tabIndex=0;
+  m.innerHTML=`<div class="crop crop-fruit ${f.cls}"></div><div><b style="color:${f.color}">${f.name}</b><div class="ar">${f.ar}</div></div>`;
+  m.onclick=()=>{select(f.id);$('spot').scrollIntoView({behavior:'smooth',block:'center'})};
+  m.onkeydown=e=>{if(e.key==='Enter')m.click()};
+  $('lineup').appendChild(m);
+});
+
+function select(id){
+  current=id;const f=FLAVORS.find(x=>x.id===id);
+  document.documentElement.style.setProperty('--accent',f.color);
+  $('artCard').classList.add('swap');
+  setTimeout(()=>{$('spotArt').className='crop crop-fruit '+f.cls;$('artCard').classList.remove('swap')},220);
+  $('spotArt').setAttribute('aria-label',f.name+' flavor art');
+  $('fName').textContent=f.name;$('fName').style.color=f.color;
+  $('fAr').textContent=f.ar;$('fAr').style.color=f.color;
+  $('fDesc').textContent=f.desc;
+  $('fNotes').innerHTML=f.notes.map(n=>`<span>${n}</span>`).join('');
+  document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.id===id));
+  document.querySelectorAll('.mini').forEach(t=>t.classList.toggle('on',t.dataset.id===id));
+  q=1;$('q').textContent=q;
+}
+$('minus').onclick=()=>{q=Math.max(1,q-1);$('q').textContent=q};
+$('plus').onclick=()=>{q=Math.min(PACK,q+1);$('q').textContent=q};
+
+const total=()=>Object.values(cart).reduce((a,b)=>a+b,0);
+$('add').onclick=()=>{
+  const room=PACK-total();
+  if(room<=0){toast('Your 6-pack is full. Open it to swap flavors.');return}
+  const n=Math.min(q,room);
+  cart[current]=(cart[current]||0)+n;
+  render();
+  const c=$('count');c.classList.add('bump');setTimeout(()=>c.classList.remove('bump'),250);
+  toast(`${n} × ${FLAVORS.find(f=>f.id===current).name} added`+(n<q?' (pack full)':''));
+};
+
+function render(){
+  const t=total();$('count').textContent=t;
+  const lines=$('lines');
+  const ids=FLAVORS.filter(f=>cart[f.id]);
+  if(!ids.length){lines.innerHTML='<div class="empty"><div class="logo-mark"></div>Your pack is empty.<br>Pick a flavor to start.</div>'}
+  else lines.innerHTML=ids.map(f=>`<div class="line"><div class="crop crop-fruit ${f.cls}"></div>
+    <div class="nm"><b>${f.name}</b><small class="ar" style="display:block;text-align:left">${f.ar}</small></div>
+    <div class="qty"><button data-d="-1" data-id="${f.id}" aria-label="Remove one">−</button><output>${cart[f.id]}</output><button data-d="1" data-id="${f.id}" aria-label="Add one">+</button></div></div>`).join('');
+  const slots=[];FLAVORS.forEach(f=>{for(let i=0;i<(cart[f.id]||0);i++)slots.push(f.color)});
+  $('meter').innerHTML=Array.from({length:PACK},(_,i)=>`<i style="${slots[i]?'background:'+slots[i]:''}"></i>`).join('');
+  $('packTitle').textContent=t===PACK?'Your 6-pack is ready':`Build a 6-pack · ${t}/${PACK}`;
+  $('packHint').textContent=t===PACK?'Nice mix. (Concept demo: nothing is ordered.)':`Mix any flavors. ${PACK-t} slot${PACK-t===1?'':'s'} left.`;
+  $('checkout').disabled=t!==PACK;
+}
+$('lines').onclick=e=>{
+  const b=e.target.closest('button[data-id]');if(!b)return;
+  const id=b.dataset.id,d=+b.dataset.d;
+  if(d>0&&total()>=PACK){toast('Pack is full');return}
+  cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];render();
+};
+$('checkout').onclick=()=>{toast('Packed! This is a concept demo, so there is no checkout.');};
+const open=v=>document.body.classList.toggle('cart-open',v);
+$('openCart').onclick=()=>open(true);$('closeCart').onclick=()=>open(false);$('scrim').onclick=()=>open(false);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')open(false)});
+
+// palette (from her board)
+[['#0061D9','Blue'],['#E52B08','Red'],['#FFBF26','Yellow'],['#85D62E','Green'],['#E37D17','Orange']].forEach(([hex,n])=>{
+  const b=document.createElement('button');b.style.background=hex;b.textContent=hex;b.title='Copy '+n+' '+hex;
+  b.onclick=()=>{try{navigator.clipboard.writeText(hex)}catch(e){};toast(n+' '+hex+' copied')};
+  $('palette').appendChild(b);
+});
+
+let tt;function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2200)}
+select('guava');render();
+</script>
+</body>
+</html>
