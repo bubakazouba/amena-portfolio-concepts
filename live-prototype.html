@@ -48,7 +48,14 @@ button{font:inherit;color:inherit}
 #page-h:focus,#view:focus{outline:none}
 main{overflow-x:clip}
 .wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 20px}
-@media (max-width:640px){.wrap{padding:0 28px}}
+@media (max-width:640px){.wrap{padding:0 28px}
+  /* Amena 11/02: on phones the space between sections is at most 2x the side padding (2 x 28px) */
+  .sec{padding-top:28px;padding-bottom:28px}.hero{padding-top:28px;padding-bottom:28px}
+  .case-hero,.gal-head{padding-top:28px;padding-bottom:28px}.proto{padding:28px 0}.foot{margin-top:28px}
+  .brand .bn>span{display:block;line-height:1.05}
+  /* iOS Safari can leave a freshly faded-in, full-page layer unpainted until the first scroll */
+  .view-enter{animation:none}
+}
 .muted{color:var(--muted)}
 .eyebrow{font:700 12px/1 var(--label);letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin:0 0 14px}
 .concept-badge{background:rgba(255,255,255,.82);color:var(--ink-2);border:1px solid var(--line);box-shadow:var(--shadow)}
@@ -443,7 +450,7 @@ h1,h2,h3,.h2,.brand,.hero h1,.feat-body h3{font-family:var(--display);letter-spa
 <a class="skip" href="#view">Skip to content</a>
 <header class="nav" id="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="#/"><span class="bee" aria-hidden="true">🐝</span>Amena Sahmoud</a>
+    <a class="brand" href="#/"><span class="bee" aria-hidden="true">🐝</span><span class="bn"><span>Amena</span> <span>Sahmoud</span></span></a>
     <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="navlinks">Menu</button>
     <nav id="navlinks" aria-label="Primary">
       <a href="#/">Home</a>
@@ -460,7 +467,7 @@ h1,h2,h3,.h2,.brand,.hero h1,.feat-body h3{font-family:var(--display);letter-spa
 <main id="view" tabindex="-1"></main>
 <footer class="foot">
   <div class="wrap">
-    <a class="brand" href="#/"><span class="bee" aria-hidden="true">🐝</span>Amena Sahmoud</a>
+    <a class="brand" href="#/"><span class="bee" aria-hidden="true">🐝</span><span class="bn"><span>Amena</span> <span>Sahmoud</span></span></a>
     <nav aria-label="Footer">
       <a href="#/work/sahl-system-design">Sahl System</a><a href="#/work/mascot">Budz Mascot</a><a href="#/photography">Photography</a><a href="#/graphic-design">Graphic Design</a><a href="mailto:sahmoudamena@gmail.com">Email</a><a href="https://www.linkedin.com/in/amenasahmoud" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://www.instagram.com/meeba.art" target="_blank" rel="noopener">Instagram ↗</a>
     </nav>
@@ -499,6 +506,7 @@ var A = (function (R, D) {
     var d = dims(src), a = ' src="' + esc(img(src, o.w)) + '" alt="' + esc(o.alt || '') + '"';
     if (d) a += ' width="' + d[0] + '" height="' + d[1] + '"';
     if (o.lazy !== false) a += ' loading="lazy" decoding="async"';
+    else a += ' fetchpriority="high"';
     if (o.cls) a += ' class="' + o.cls + '"';
     return '<img' + a + '>';
   }
