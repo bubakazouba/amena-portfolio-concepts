@@ -44,11 +44,16 @@ def main(scrape):
 
     # FAQ answers: each snapshot is the FAQ text with one question open (the page's own
     # default state, where the first one starts open, counts as a snapshot too)
+    # Only the FAQ section of the fresh list counts: past its last question the next item is the
+    # contact heading, which once got recorded as the relocation answer (11/02). First capture wins.
+    fx = [x.get("x", "") for x in fresh]
+    f0 = fx.index("FAQs") + 1
+    f1 = next((i for i in range(f0, len(fresh)) if fresh[i]["t"] == "h2"), len(fresh))
     qa = {}
-    for snap in new.get("faq", []) + [[x.get("x", "") for x in fresh]]:
+    for snap in new.get("faq", []) + [fx[f0:f1]]:
         for i, t in enumerate(snap):
             if not t.endswith("?") and i and snap[i - 1].endswith("?"):
-                qa[snap[i - 1]] = t
+                qa.setdefault(snap[i - 1], t)
     iq = next(i for i, x in enumerate(home) if x.get("x") == "FAQs")
     ic = next(i for i in range(iq + 1, len(home)) if home[i]["t"] == "h2")
     faq = [x for x in home[iq + 1:ic] if x["x"].endswith("?")]
