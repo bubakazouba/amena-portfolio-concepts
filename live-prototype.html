@@ -735,7 +735,8 @@ var A = (function (R, D) {
       }
     }
     H.aboutTitle = b[iA].x; H.roles = b[iA + 1].x.split(/,\s*/);
-    H.rotRoles = ['UX Designer', 'Problem Solver', 'Systems Thinker'];   /* rotating hero line (Amena 11/06); About keeps H.roles */ H.portrait = b[iA + 2].src; H.timeline = [];
+    H.rotRoles = ['ux designer', 'problem solver', 'systems thinker'];   /* rotating hero line, lowercase (Amena 11/06); About keeps H.roles */
+    H.lead = "Hi I'm Amena, a"; H.tail = 'who makes complicated flows comfortable to use.';   /* Amena's wording 11/06 */ H.portrait = b[iA + 2].src; H.timeline = [];
     for (k = iA + 3; k < iQ; k++) {
       if (b[k].t === 'h4') { H.timeline.push({ title: b[k].x, date: b[k + 1].x, desc: b[k + 2].x }); k += 2; }
     }
@@ -886,7 +887,7 @@ var A = (function (R, D) {
     renderItems: renderItems, renderSection: renderSection, renderMeta: renderMeta, galleryButtons: galleryButtons,
     lightbox: lightbox,
     /* by sound, not spelling: "a UX designer" (you-ex), "an Artist" */
-    article: function (word) { return /^(U[A-Z]|uni|use|usu)/.test(word) || !/^[AEIOU]/i.test(word) ? 'a' : 'an'; }
+    article: function (word) { return /^(U[A-Z]|ux|uni|use|usu)/i.test(word) || !/^[AEIOU]/i.test(word) ? 'a' : 'an'; }
   };
 })(AMENA_RAW, AMENA_DIMS);
 
@@ -927,7 +928,7 @@ var A = (function (R, D) {
       '<section class="wrap hero" aria-labelledby="page-h">' +
         '<div>' +
           '<p class="avail"><i aria-hidden="true"></i>' + esc(H.available) + '</p>' +
-          '<h1 id="page-h" tabindex="-1">' + esc(lead) + ' <span id="art">' + A.article(r0) + '</span> <span class="rot"><span id="rot" aria-hidden="true">' + esc(r0) + '</span><span class="sr-only">' + esc(H.rotRoles.join(', ')) + '</span></span><br><span class="tail">' + esc(H.tail) + '</span></h1>' +
+          '<h1 id="page-h" tabindex="-1">' + esc(lead) + ' <span id="art">' + A.article(r0) + '</span> <span class="rot"><span id="rot" aria-hidden="true">' + esc(r0) + '</span><span class="sr-only">' + esc(H.rotRoles.join(', ')) + '</span></span>,<br><span class="tail">' + esc(H.tail) + '</span></h1>' +
           '<div class="cta"><a class="btn btn-primary" href="#/work/sahl-system-design">Try the Sahl prototype →</a><a class="btn" href="#/contact">Let’s talk</a></div>' +
         '</div>' +
         '<div class="hero-art" aria-hidden="true">' +
