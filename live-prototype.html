@@ -143,11 +143,11 @@ main{overflow-x:clip}
 @media (max-width:700px){.more{grid-template-columns:1fr}}
 /* What I Do, as on v1: blue-outlined paper cards on a dotted field, overlapping, each slightly tilted,
    the hand-drawn icon pinned over the top-right corner, sparkle bullets */
-.what-sec{background-image:radial-gradient(rgba(30,75,154,.16) 1px,transparent 1.2px);background-size:22px 22px;background-position:center}
+.what-sec{}  /* Amena 11/06: no dotted paper behind What I Do */
 .what-sec .sec-head{justify-content:center;text-align:center}
 .what{display:grid;grid-template-columns:repeat(3,1fr);gap:0;align-items:start;padding:30px 10px 10px;max-width:940px;margin:0 auto}
 .what-card{background:#fbfbfd;border:1.5px solid var(--blue);border-radius:2px;padding:46px 26px 40px;aspect-ratio:5/6;position:relative;will-change:transform;color:var(--blue)}
-.what-card:nth-child(2){margin:44px -22px 0}
+.what-card:nth-child(2){margin:44px 0 0}  /* Amena 11/06: same size as the UX Design card (no side overlap) */
 .what-card:nth-child(3){margin-top:18px}
 .what-card img{position:absolute;top:-30px;right:16px;width:72px;height:72px;margin:0}
 .what-card h3{margin:0 0 16px;padding-bottom:18px;border-bottom:1.5px solid var(--blue);font-size:22px;letter-spacing:-.01em;color:var(--blue)}
@@ -160,7 +160,7 @@ main{overflow-x:clip}
 
 /* about */
 .about-sec{position:relative;background-color:var(--bg)}
-.about-sec::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(30,75,154,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(30,75,154,.09) 1px,transparent 1px);background-size:26px 26px;background-position:center top;-webkit-mask-image:radial-gradient(ellipse 72% 70% at 50% 50%,#000 40%,transparent 100%);mask-image:radial-gradient(ellipse 72% 70% at 50% 50%,#000 40%,transparent 100%)}
+.about-sec::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(30,75,154,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(30,75,154,.09) 1px,transparent 1px);background-size:26px 26px;background-position:center top;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 160px),radial-gradient(ellipse 72% 70% at 50% 50%,#000 40%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0,#000 160px),radial-gradient(ellipse 72% 70% at 50% 50%,#000 40%,transparent 100%);mask-composite:intersect}  /* Amena 11/06: graph paper fades out at the top */
 .about-sec>.wrap{position:relative}
 .about{display:grid;grid-template-columns:minmax(0,430px) 1fr;gap:56px;align-items:center}
 .portrait{border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg);background:#fff}
