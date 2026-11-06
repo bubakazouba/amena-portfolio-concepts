@@ -1345,6 +1345,7 @@ var A = (function (R, D) {
     first: { start: [-6, -2, 4, 8], end: [-4, 3, -2, 4], lift: [0, 10, 0, 6] }
   };
   function initDeal() {
+    try { sessionStorage.removeItem('amena-v2-dealt-first'); sessionStorage.removeItem('amena-v2-dealt-center'); } catch (e) { /* older builds kept these */ }
     var groups = [].map.call(view.querySelectorAll('[data-deal]'), function (g) {
       return { el: g, cfg: DEAL[g.getAttribute('data-deal')], first: g.getAttribute('data-deal') === 'first',
         items: [].filter.call(g.children, function (c) { return c.classList.contains('what-card') || c.classList.contains('polaroid'); }),
@@ -1356,10 +1357,10 @@ var A = (function (R, D) {
       var vh = window.innerHeight;
       groups.forEach(function (G) {
         var r = G.el.getBoundingClientRect(), n = G.items.length;
-        var key = 'amena-v2-dealt-' + (G.first ? 'first' : 'center');
-        if (!G.done) { try { G.done = sessionStorage.getItem(key) === '1'; } catch (e) { /* no storage: just don't persist */ } }
+        /* once dealt, a group stays dealt for this home-page visit; it deals again on the next visit or reload
+           (Amena 11/06: remembering it for the whole browser session read as "the animation stopped working") */
         var p = (A.reduced || G.done) ? 1 : Math.min(1, Math.max(0, (vh * 0.92 - r.top) / (vh * 0.5)));
-        if (p >= 1 && !G.done) { G.done = true; try { sessionStorage.setItem(key, '1'); } catch (e) { /* ignore */ } }
+        if (p >= 1) G.done = true;
         p = 1 - Math.pow(1 - p, 2);
         var a = G.items[G.first ? 0 : Math.floor(n / 2)];
         G.stacked1col = !G.first && n > 1 && G.items[0].offsetLeft === G.items[1].offsetLeft;
