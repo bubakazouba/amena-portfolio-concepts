@@ -133,10 +133,10 @@ main{overflow-x:clip}
 .more{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:26px}
 .more a{display:block;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;text-decoration:none;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s}
 .more a:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
-.mosaic{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:6px;height:220px;border-radius:14px;overflow:hidden}
-.mosaic img{width:100%;height:100%;object-fit:cover}
+.mosaic{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:minmax(0,1fr) minmax(0,1fr);gap:6px;height:220px;border-radius:14px;overflow:hidden}
+.mosaic img{width:100%;height:100%;min-height:0;object-fit:cover}
 .mosaic img:first-child{grid-row:span 2}
-.mosaic.two{grid-template-columns:1.45fr 1fr;grid-template-rows:1fr}
+.mosaic.two{grid-template-columns:1.45fr 1fr;grid-template-rows:minmax(0,1fr)}
 .mosaic.two img:first-child{grid-row:auto}
 .more h3{margin:14px 6px 2px;font-size:20px;letter-spacing:-.02em}
 .more p{margin:0 6px 4px;color:var(--muted);font-size:14px}
@@ -510,7 +510,7 @@ var A = (function (R, D) {
       .replace(/\s*[·•]\s*$/, '').trim();
   }
   function isSvg(src) { return /\.svg($|\?)/i.test(src); }
-  function img(src, w) { return isSvg(src) ? src : src + '?scale-down-to=' + (w || 1024); }
+  function img(src, w) { return isSvg(src) || !/^https?:/.test(src) ? src : src + '?scale-down-to=' + (w || 1024); }
   function dims(src) { return (D && D[src]) || null; }
   function imgTag(src, o) {
     o = o || {};
@@ -661,22 +661,27 @@ var A = (function (R, D) {
   /* gallery filters as on amenasahmoud.com: category -> Framer image-id prefixes */
   var GCATS = {
     photography: {
-      'Nature': ['KqQIx0t2', 'h8klK0av', 'W34tBRa8'],
+      'Nature': ['KqQIx0t2', 'h8klK0av', 'W34tBRa8', 'ph-nature-'],
       'Documentary': ['8WC218oB', 'vg7MIA51', 'xgPfSYbx', '8hIjhDrt', 'qAB88jGh'],
       'Portrait': ['IX5SDJOi', 'UJxr6v0S', '449IlwfJ', 'uvXxiUzq'],
-      'Travel': ['NNgtL9FF', 'Ikp9ZAPH', 'LhsBtMpH'],
+      'Travel': ['NNgtL9FF', 'Ikp9ZAPH', 'LhsBtMpH', 'ph-travel-', 'hero-vancouver'],
       'Event': ['vtoGsbaJ', 'DvzW6g71', '2SGu5ZN9', 'W48Xjbl3', 'QpdjkpYG']   /* robotics competition, tagged by Amena 10/28 */
     },
     graphic: {
-      'Branding': ['DodEYR5b', 'u70n6Woz', 'zqGKGhd5', 'q97p98V8', 'SG6dCDLo', 'U9xEUL7h', 'jwouIPiU', 'j5NTwrcE', '4Zxz34tb'],
+      'Branding': ['DodEYR5b', 'u70n6Woz', 'zqGKGhd5', 'q97p98V8', 'SG6dCDLo', 'U9xEUL7h', 'jwouIPiU', 'gd-best-juice', 'j5NTwrcE', '4Zxz34tb'],
       'Social Media': ['CJMSy2FG', '46Tza0It', 'RF4sO6wu', 'WQteZ5wU', '9cgM3tYm', '5nEigj1l', 'W8frhG5Z', 'nyxyPbdE', 'aFCkOuXB', 'BFDL2ut8', 'zMPgxxF5', 'jIztGfwA'],
       'Art': ['HlkgW0EG', 'AtkJiV3b', 'ZJjAtcqS', '2CcXApNr', '7G4aphnI', 'l9n4GAlP', 'cVAdfTGd'],
       'Packaging': ['MiAsDD3R', 'SBp751Wv']
     }
   };
+  /* photos Amena sent directly (not on the Framer site), appended to the gallery */
+  var EXTRA = {
+    photography: ['img/ph-travel-tower.jpg', 'img/hero-vancouver.jpg', 'img/ph-nature-cat.jpg', 'img/ph-nature-puppies.jpg'],
+    graphic: ['img/gd-best-juice-billboard.jpg']
+  };
   function fileOf(src) { return String(src).split('?')[0].split('/').pop(); }
   function buildGallery(key, id, noun, url) {
-    var b = prep(key), imgs = b.filter(function (o) { return o.t === 'img'; }).map(function (o) { return o.src; });
+    var b = prep(key), imgs = b.filter(function (o) { return o.t === 'img'; }).map(function (o) { return o.src; }).concat(EXTRA[id] || []);
     var titles = {}, cats = GCATS[id] || {}, names = Object.keys(cats);
     (R[key] || []).forEach(function (o) { if (o.t === 'img' && o.alt && o.alt !== 'Untitled') titles[fileOf(o.src)] = o.alt; });
     var set = imgs.map(function (src, k) {
@@ -895,6 +900,10 @@ var A = (function (R, D) {
   }
 
   /* ---------------- home ---------------- */
+  /* header collage photos (Amena 11/06) */
+  /* featured-card pill renames (Amena 11/06) */
+  var TAGFIX = { 'A Face for Fintech': { 'UX strategy': 'Fintech' } };
+  var HERO = ['img/hero-bee.jpg', 'img/hero-vancouver.jpg', 'img/hero-cairo-tower.jpg'];
   function homeView() {
     var r0 = H.roles[0], lead = H.lead.replace(/\s+a$/, '');
     var f = H.featured;
@@ -907,15 +916,13 @@ var A = (function (R, D) {
           '<div class="cta"><a class="btn btn-primary" href="#/work/sahl-system-design">Try the Sahl prototype →</a><a class="btn" href="#/contact">Let’s talk</a></div>' +
         '</div>' +
         '<div class="hero-art" aria-hidden="true">' +
-          '<div class="card c1">' + A.imgTag(f[0].img, { w: 1024, lazy: false }) + '</div>' +
-          '<div class="card c2">' + A.imgTag(H.portrait, { w: 512, lazy: false }) + '</div>' +
-          '<div class="card c3">' + A.imgTag(f[1].img, { w: 512, lazy: false }) + '</div>' +
+          HERO.map(function (src, k) { return '<div class="card c' + (k + 1) + '">' + A.imgTag(src, { lazy: false }) + '</div>'; }).join('') +
         '</div>' +
       '</section>' +
       '<section class="sec wrap" id="work" aria-labelledby="work-h"><div class="sec-head"><h2 id="work-h">' + esc(H.featuredTitle) + '</h2></div><div class="feat">' +
         f.map(function (p, k) {
           return '<a class="feat-card" href="#/work/' + slugs[k] + '"><div class="feat-img">' + A.imgTag(p.img, { w: 1024, alt: p.title }) + (k === 0 ? '<span class="pill-live">Interactive prototype inside</span>' : '') + '</div>' +
-            '<div class="feat-body"><div class="tags">' + p.tags.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div>' +
+            '<div class="feat-body"><div class="tags">' + p.tags.map(function (t) { t = (TAGFIX[p.title] || {})[t] || t; return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div>' +
             '<h3>' + esc(p.title) + '</h3><p>' + esc(p.sub) + '</p><p class="dates">' + esc(p.cs.metaGet('Company')[0] || '') + ' · ' + esc(p.dates) + '</p><span class="arrow">Read the case study →</span></div></a>';
         }).join('') +
       '</div><div class="more">' + moreCard(PH, '#/photography', PH.images.length + ' photographs') + moreCard(GD, '#/graphic-design', GD.images.length + ' pieces') + '</div></section>' +
@@ -948,7 +955,10 @@ var A = (function (R, D) {
     return EMOJI.map(function (e, k) { return '<span class="emo-d" data-emo="' + k + '" role="img" aria-label="Draggable sticker ' + esc(e) + '">' + esc(e) + '</span>'; }).join('');
   }
   /* gallery cover picks (Amena 11/02): image-id prefix -> object-position on the subject's head */
-  var COVERS = { photography: [['vtoGsbaJ', '58% 22%'], ['449IlwfJ', '50% 30%']] };
+  var COVERS = {
+    photography: [['vtoGsbaJ', '58% 22%'], ['449IlwfJ', '50% 30%']],
+    graphic: [['MiAsDD3R', '50% 50%'], ['7G4aphnI', '50% 50%'], ['gd-best-juice-billboard', '50% 50%']]   /* pencils, eyes, billboard (Amena 11/06) */
+  };
   function moreCard(g, href, label) {
     var picks = (COVERS[g.id] || []).map(function (c) {
       var src = g.images.filter(function (s) { return s.split('/').pop().indexOf(c[0]) === 0; })[0];
