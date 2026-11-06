@@ -197,7 +197,12 @@ main{overflow-x:clip}
 .faq summary{cursor:pointer;list-style:none;padding:20px 56px 20px 22px;font-weight:650;font-size:17px;position:relative}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"";position:absolute;right:20px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;background:linear-gradient(var(--pink),var(--pink)) center/12px 2px no-repeat,linear-gradient(var(--pink),var(--pink)) center/2px 12px no-repeat,var(--blue-50);transition:transform .2s}
-.faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq details.is-open summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq summary::after{transition:transform .45s cubic-bezier(.22,1,.36,1)}
+.faq-a{overflow:hidden}
+/* Amena 11/06: dotted paper behind the FAQs, fading out at the edges like v1 */
+#faq{position:relative;isolation:isolate}
+#faq::before{content:"";position:absolute;inset:0 -40px;z-index:-1;pointer-events:none;background-image:radial-gradient(rgba(30,75,154,.24) 1px,transparent 1.2px);background-size:22px 22px;background-position:center;-webkit-mask-image:radial-gradient(ellipse at center,#000 35%,transparent 72%);mask-image:radial-gradient(ellipse at center,#000 35%,transparent 72%)}
 .faq details p{margin:0;padding:0 22px 20px;color:var(--muted)}
 .contact{background:var(--blue);color:#fff;border-radius:16px;padding:clamp(32px,6vw,72px);position:relative;overflow:hidden}
 .contact::after{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.22),transparent 70%)}
@@ -216,6 +221,13 @@ main{overflow-x:clip}
 .foot nav{display:flex;gap:16px;flex-wrap:wrap}
 .foot a{color:var(--muted);text-decoration:none;font-size:14px}
 .foot a:hover{color:var(--blue)}
+/* Amena 11/06: logo stacked over a bigger name on the left, contact links stacked on the right */
+.foot .wrap{align-items:flex-start}
+.foot .brand{flex-direction:column;align-items:flex-start;gap:10px;font-size:26px;color:var(--ink)}
+.foot .brand .bee{width:64px;height:64px;margin:0}
+.foot .brand .bn>span{display:inline}
+.foot nav{flex-direction:column;align-items:flex-end;gap:10px}
+.foot nav a{font-size:16px}
 
 /* ---------- case study ---------- */
 .case-hero{padding-top:44px;padding-bottom:28px}
@@ -480,7 +492,7 @@ h1,h2,h3,.h2,.brand,.hero h1,.feat-body h3{font-family:var(--display);letter-spa
   <div class="wrap">
     <a class="brand" href="#/"><span class="bee" aria-hidden="true"><img src="img/bee.png" alt=""></span><span class="bn"><span>Amena</span> <span>Sahmoud</span></span></a>
     <nav aria-label="Footer">
-      <a href="#/work/sahl-system-design">Sahl System</a><a href="#/work/mascot">Budz Mascot</a><a href="#/photography">Photography</a><a href="#/graphic-design">Graphic Design</a><a href="mailto:sahmoudamena@gmail.com">Email</a><a href="https://www.linkedin.com/in/amenasahmoud" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://www.instagram.com/meeba.art" target="_blank" rel="noopener">Instagram ↗</a>
+      <a href="mailto:sahmoudamena@gmail.com">Email</a><a href="https://www.linkedin.com/in/amenasahmoud" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://www.instagram.com/meeba.art" target="_blank" rel="noopener">Instagram ↗</a><a href="Amena-Sahmoud-Resume.pdf" target="_blank" rel="noopener">Resumé ↗</a>
     </nav>
   </div>
 </footer>
@@ -944,12 +956,39 @@ var A = (function (R, D) {
       '</div></section>' +
       '<section class="sec wrap" id="faq" aria-labelledby="faq-h"><div class="sec-head"><h2 id="faq-h">' + esc(H.faqTitle) + '</h2></div><div class="faq">' +
         H.faqs.map(function (q, k) {
-          return '<details' + (k === 0 ? ' open' : '') + '><summary>' + esc(q.q) + '</summary>' + (q.a ? '<p>' + esc(q.a) + '</p>' : '<p><a href="' + A.CONTACT + '" target="_blank" rel="noopener">Ask Amena directly →</a></p>') + '</details>';
+          return '<details' + (k === 0 ? ' open class="is-open"' : '') + '><summary>' + esc(q.q) + '</summary><div class="faq-a">' + (q.a ? '<p>' + esc(q.a) + '</p>' : '<p><a href="' + A.CONTACT + '" target="_blank" rel="noopener">Ask Amena directly →</a></p>') + '</div></details>';
         }).join('') +
       '</div></section>' +
       contactBlock();
   }
   /* the doodle emoji under the polaroids (coffee dropped at Amena's ask 11/02); each can be dragged anywhere */
+  /* FAQ accordion (Amena 11/06, v1 as reference): one open at a time, answers slide open/closed instead of snapping */
+  var FAQ_EASE = 'height .45s cubic-bezier(.22,1,.36,1)';
+  function faqSet(d, open) {
+    var a = d.querySelector('.faq-a');
+    if (open === d.classList.contains('is-open')) return;
+    d.classList.toggle('is-open', open);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { d.open = open; return; }
+    if (open) d.open = true;
+    var from = open ? 0 : a.scrollHeight, to = open ? a.scrollHeight : 0;
+    a.style.transition = 'none'; a.style.height = from + 'px';
+    a.offsetHeight;
+    a.style.transition = FAQ_EASE; a.style.height = to + 'px';
+    a.addEventListener('transitionend', function done(e) {
+      if (e.target !== a) return;
+      a.removeEventListener('transitionend', done);
+      if (!d.classList.contains('is-open')) d.open = false;
+      a.style.transition = ''; a.style.height = '';
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var sm = e.target.closest('.faq summary');
+    if (!sm) return;
+    e.preventDefault();
+    var d = sm.parentNode, open = !d.classList.contains('is-open');
+    if (open) d.parentNode.querySelectorAll('details.is-open').forEach(function (o) { if (o !== d) faqSet(o, false); });
+    faqSet(d, open);
+  });
   var EMOJI = H.emoji.filter(function (e) { return e.replace(/️/g, '') !== '☕'; });
   function emojiHTML() {
     return EMOJI.map(function (e, k) { return '<span class="emo-d" data-emo="' + k + '" role="img" aria-label="Draggable sticker ' + esc(e) + '">' + esc(e) + '</span>'; }).join('');
