@@ -202,7 +202,7 @@ main{overflow-x:clip}
 .faq-a{overflow:hidden}
 /* Amena 11/06: dotted paper behind the FAQs, fading out at the edges like v1 */
 #faq{position:relative;isolation:isolate}
-#faq::before{content:"";position:absolute;inset:0 -40px;z-index:-1;pointer-events:none;background-image:radial-gradient(rgba(30,75,154,.24) 1px,transparent 1.2px);background-size:22px 22px;background-position:center;-webkit-mask-image:radial-gradient(ellipse at center,#000 35%,transparent 72%);mask-image:radial-gradient(ellipse at center,#000 35%,transparent 72%)}
+#faq::before{content:"";position:absolute;inset:0 -40px;z-index:-1;pointer-events:none;background-image:radial-gradient(rgba(30,75,154,.4) 1px,transparent 1.2px);background-size:22px 22px;background-position:center top;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 120px,#000 calc(100% - 120px),transparent 100%),linear-gradient(to right,transparent 0,#000 22%,#000 78%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0,#000 120px,#000 calc(100% - 120px),transparent 100%),linear-gradient(to right,transparent 0,#000 22%,#000 78%,transparent 100%);mask-composite:intersect}  /* dots pinned to the top so opening an answer only extends the paper downward (Amena 11/06) */
 .faq details p{margin:0;padding:0 22px 20px;color:var(--muted)}
 .contact{background:var(--blue);color:#fff;border-radius:16px;padding:clamp(32px,6vw,72px);position:relative;overflow:hidden}
 .contact::after{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.22),transparent 70%)}
