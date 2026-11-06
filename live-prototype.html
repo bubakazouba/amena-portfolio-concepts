@@ -1351,7 +1351,7 @@ var A = (function (R, D) {
         items: [].filter.call(g.children, function (c) { return c.classList.contains('what-card') || c.classList.contains('polaroid'); }),
         rider: g.querySelector(':scope > .life-note') };
     });
-    var raf = 0, DEAL_MS = 1800;
+    var raf = 0, DEAL_MS = 500;   /* Amena 11/06: 0.5s */
     /* After Effects "Easy Ease" (Amena 11/06) = cubic-bezier(.33, 0, .67, 1): solve x(t) = p, return y(t) */
     function easyEase(p) {
       var x1 = 0.33, x2 = 0.67, t = p;
