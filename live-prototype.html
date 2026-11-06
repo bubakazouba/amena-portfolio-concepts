@@ -202,7 +202,7 @@ main{overflow-x:clip}
 .faq-a{overflow:hidden}
 /* Amena 11/06: dotted paper behind the FAQs, fading out at the edges like v1 */
 #faq{position:relative;isolation:isolate}
-#faq::before{content:"";position:absolute;inset:0 -40px;z-index:-1;pointer-events:none;background-image:radial-gradient(rgba(30,75,154,.4) 1px,transparent 1.2px);background-size:22px 22px;background-position:center top;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 120px,#000 calc(100% - 120px),transparent 100%),linear-gradient(to right,transparent 0,#000 22%,#000 78%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0,#000 120px,#000 calc(100% - 120px),transparent 100%),linear-gradient(to right,transparent 0,#000 22%,#000 78%,transparent 100%);mask-composite:intersect}  /* dots pinned to the top so opening an answer only extends the paper downward (Amena 11/06) */
+#faq::before{content:"";position:absolute;inset:0 -40px;z-index:-1;pointer-events:none;background-image:radial-gradient(rgba(30,75,154,.25) 1px,transparent 1.2px);background-size:22px 22px;background-position:center top;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 120px,#000 calc(100% - 120px),transparent 100%),linear-gradient(to right,transparent 0,#000 22%,#000 78%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0,#000 120px,#000 calc(100% - 120px),transparent 100%),linear-gradient(to right,transparent 0,#000 22%,#000 78%,transparent 100%);mask-composite:intersect}  /* dots pinned to the top so opening an answer only extends the paper downward (Amena 11/06) */
 .faq details p{margin:0;padding:0 22px 20px;color:var(--muted)}
 .contact{background:var(--blue);color:#fff;border-radius:16px;padding:clamp(32px,6vw,72px);position:relative;overflow:hidden}
 .contact::after{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.22),transparent 70%)}
@@ -791,7 +791,7 @@ var A = (function (R, D) {
   }
   function renderMeta(cs) {
     return '<dl class="cs-meta">' + cs.meta.map(function (m) {
-      return '<div><dt>' + esc(m.k) + '</dt><dd>' + (m.k === 'Skills' ? m.v.map(function (v) { return '<span class="tag">' + esc(v) + '</span>'; }).join(' ') : esc(m.v.join(', '))) + '</dd></div>';
+      return '<div><dt>' + esc(m.k) + '</dt><dd>' + (m.k === 'Skills' ? (cs.cardTags || m.v).map(function (v) { return '<span class="tag">' + esc(v) + '</span>'; }).join(' ') : esc(m.v.join(', '))) + '</dd></div>';
     }).join('') + '</dl>';
   }
   function galleryButtons(g, w, cls, cat) {
@@ -870,9 +870,13 @@ var A = (function (R, D) {
     photography: buildGallery('/project/photography', 'photography', 'Photograph', SITE + '/project/photography'),
     graphic: buildGallery('/project/graphicdesign', 'graphic', 'Graphic design piece', SITE + '/project/graphicdesign')
   };
-  /* featured cards: show each project's own Duration from its case-study page */
+  /* featured cards: show each project's own Duration from its case-study page. Pills set by Amena 11/06
+     replace the scraped tags, and the case page's Skills row shows the same pills as its home card. */
+  var CARD_TAGS = { 'A Face for Fintech': ['Design Strategy', 'Character Design', 'Brand'] };
   home.featured.forEach(function (f, k) {
     var cs = k === 0 ? cases.sahl : cases.budz; f.cs = cs; f.dates = cs.metaGet('Duration').join(', ') || f.homeDates;
+    if (CARD_TAGS[f.title]) f.tags = CARD_TAGS[f.title];
+    cs.cardTags = f.tags;
   });
 
   return {
@@ -914,8 +918,6 @@ var A = (function (R, D) {
 
   /* ---------------- home ---------------- */
   /* header collage photos (Amena 11/06) */
-  /* featured-card pills set by Amena 11/06 (replace the scraped tags) */
-  var TAGS = { 'A Face for Fintech': ['Design Strategy', 'Character Design', 'Brand'] };
   var HERO = ['img/hero-bee.jpg', 'img/hero-vancouver.jpg', 'img/hero-cairo-tower.jpg'];
   function homeView() {
     var r0 = H.rotRoles[0], lead = H.lead.replace(/\s+a$/, '');
@@ -935,7 +937,7 @@ var A = (function (R, D) {
       '<section class="sec wrap" id="work" aria-labelledby="work-h"><div class="sec-head"><h2 id="work-h">' + esc(H.featuredTitle) + '</h2></div><div class="feat">' +
         f.map(function (p, k) {
           return '<a class="feat-card" href="#/work/' + slugs[k] + '"><div class="feat-img">' + A.imgTag(p.img, { w: 1024, alt: p.title }) + (k === 0 ? '<span class="pill-live">Interactive prototype inside</span>' : '') + '</div>' +
-            '<div class="feat-body"><div class="tags">' + (TAGS[p.title] || p.tags).map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div>' +
+            '<div class="feat-body"><div class="tags">' + p.tags.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div>' +
             '<h3>' + esc(p.title) + '</h3><p>' + esc(p.sub) + '</p><p class="dates">' + esc(p.cs.metaGet('Company')[0] || '') + ' · ' + esc(p.dates) + '</p><span class="arrow">Read the case study →</span></div></a>';
         }).join('') +
       '</div><div class="more">' + moreCard(PH, '#/photography', PH.images.length + ' photographs') + moreCard(GD, '#/graphic-design', GD.images.length + ' pieces') + '</div></section>' +
