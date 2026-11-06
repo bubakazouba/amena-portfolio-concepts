@@ -1307,6 +1307,7 @@ var A = (function (R, D) {
     if (anchor) path = '/';
     if (!ROUTES[path]) path = '/';
     if (path !== lastPath) {
+      if (lastPath === '/') emoReset();
       cleanups.forEach(function (f) { f(); }); cleanups = [];
       clearInterval(rotTimer);
       view.innerHTML = ROUTES[path]();
@@ -1377,14 +1378,14 @@ var A = (function (R, D) {
     onCleanup(function () { window.removeEventListener('scroll', tick); window.removeEventListener('resize', tick); if (raf) cancelAnimationFrame(raf); });
   }
 
-  /* Stickers: any emoji under the photos can be dragged anywhere on the site. A moved one lives
-     in a page-level layer at document coordinates (so it stays put across pages) and is kept in
-     sessionStorage, i.e. until it is moved again or the browser session ends. */
-  var EMO_KEY = 'amena-v2-stickers', emoLayer = document.createElement('div');
+  /* Stickers: any emoji under the photos can be dragged anywhere on the home page. A moved one lives
+     in a page-level layer at document coordinates. Amena 11/06: they never leave the home page, and
+     they all go back under the photos as soon as the visitor leaves it (nothing is persisted). */
+  var emoLayer = document.createElement('div');
   emoLayer.id = 'emo-layer'; emoLayer.setAttribute('aria-hidden', 'true'); document.body.appendChild(emoLayer);
-  function emoLoad() { try { return JSON.parse(sessionStorage.getItem(EMO_KEY)) || {}; } catch (e) { return {}; } }
-  function emoSave(st) { try { sessionStorage.setItem(EMO_KEY, JSON.stringify(st)); } catch (e) { /* private mode: stickers just don't persist */ } }
-  var emoPos = emoLoad();
+  try { sessionStorage.removeItem('amena-v2-stickers'); } catch (e) { /* older builds kept positions here */ }
+  var emoPos = {};
+  function emoReset() { emoPos = {}; emoLayer.innerHTML = ''; }
   function floater(k) {
     var f = emoLayer.querySelector('[data-emo="' + k + '"]');
     if (!f) { f = document.createElement('span'); f.className = 'emo-d'; f.setAttribute('data-emo', k); f.textContent = EMOJI[k]; emoLayer.appendChild(f); }
@@ -1411,7 +1412,6 @@ var A = (function (R, D) {
     function up() {
       f.classList.remove('dragging');
       document.removeEventListener('pointermove', move); document.removeEventListener('pointerup', up); document.removeEventListener('pointercancel', up);
-      emoSave(emoPos);
     }
     document.addEventListener('pointermove', move); document.addEventListener('pointerup', up); document.addEventListener('pointercancel', up);
   });
