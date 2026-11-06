@@ -1351,17 +1351,31 @@ var A = (function (R, D) {
         items: [].filter.call(g.children, function (c) { return c.classList.contains('what-card') || c.classList.contains('polaroid'); }),
         rider: g.querySelector(':scope > .life-note') };
     });
-    var raf = 0;
+    var raf = 0, DEAL_MS = 1800;
+    /* After Effects "Easy Ease" (Amena 11/06) = cubic-bezier(.33, 0, .67, 1): solve x(t) = p, return y(t) */
+    function easyEase(p) {
+      var x1 = 0.33, x2 = 0.67, t = p;
+      for (var k = 0; k < 8; k++) {
+        var x = 3 * (1 - t) * (1 - t) * t * x1 + 3 * (1 - t) * t * t * x2 + t * t * t - p;
+        var dx = 3 * (1 - t) * (1 - t) * x1 + 6 * (1 - t) * t * (x2 - x1) + 3 * t * t * (1 - x2);
+        if (Math.abs(x) < 1e-5 || !dx) break;
+        t -= x / dx;
+      }
+      t = Math.min(1, Math.max(0, t));
+      return 3 * (1 - t) * t * t + t * t * t;
+    }
     function frame() {
       raf = 0;
-      var vh = window.innerHeight;
+      var vh = window.innerHeight, animating = false;
       groups.forEach(function (G) {
         var r = G.el.getBoundingClientRect(), n = G.items.length;
-        /* once dealt, a group stays dealt for this home-page visit; it deals again on the next visit or reload
-           (Amena 11/06: remembering it for the whole browser session read as "the animation stopped working") */
-        var p = (A.reduced || G.done) ? 1 : Math.min(1, Math.max(0, (vh * 0.92 - r.top) / (vh * 0.5)));
-        if (p >= 1) G.done = true;
-        p = 1 - Math.pow(1 - p, 2);
+        /* Amena 11/06: the deal runs on its own clock (slow, DEAL_MS) once the group scrolls into view, so
+           scroll speed doesn't change it. It stays dealt for this home-page visit and deals again on the next
+           visit or reload (remembering it for the whole browser session read as "the animation stopped working"). */
+        if (!G.t0 && r.top < vh * 0.8) G.t0 = performance.now();
+        var p = A.reduced ? 1 : G.t0 ? Math.min(1, (performance.now() - G.t0) / DEAL_MS) : 0;
+        if (p < 1 && G.t0) animating = true;
+        p = easyEase(p);
         var a = G.items[G.first ? 0 : Math.floor(n / 2)];
         G.stacked1col = !G.first && n > 1 && G.items[0].offsetLeft === G.items[1].offsetLeft;
         var ax = a.offsetLeft + a.offsetWidth / 2, ay = a.offsetTop + a.offsetHeight / 2;
@@ -1374,6 +1388,7 @@ var A = (function (R, D) {
           if (G.rider && i === n - 1) G.rider.style.transform = 'translate(' + dx.toFixed(1) + 'px,' + ((ay - el.offsetTop - el.offsetHeight / 2) * (1 - p)).toFixed(1) + 'px)';
         });
       });
+      if (animating) tick();
     }
     function tick() { if (!raf) raf = requestAnimationFrame(frame); }
     frame();
