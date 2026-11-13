@@ -527,9 +527,8 @@ h1,h2,h3,.h2,.brand,.hero h1,.feat-body h3{font-family:var(--display);letter-spa
 @media (max-width:620px){.masonry.mz{gap:8px}}
 
 /* Amena 11/13: on phones nothing should show above the header; grey bar reaches the very top (also under the iOS status bar) */
-.nav::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:100vh;background:rgb(247,248,251);pointer-events:none}
+.nav::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:100vh;background:rgba(247,248,251,.82);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);pointer-events:none}
 .nav{padding-top:env(safe-area-inset-top,0)}
-@media (max-width:760px){.nav{background:rgb(247,248,251)}}
 </style>
 </head>
 <body>
