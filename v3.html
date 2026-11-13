@@ -755,6 +755,11 @@ var A = (function (R, D) {
   function fileOf(src) { return String(src).split('?')[0].split('/').pop(); }
   function buildGallery(key, id, noun, url) {
     var b = prep(key), imgs = b.filter(function (o) { return o.t === 'img'; }).map(function (o) { return o.src; }).concat(EXTRA[id] || []);
+    /* Amena 11/13: pinned order (Framer id prefixes) */
+    var MOVE = { photography: { last: ['8WC218oB', '8hIjhDrt'] }, graphic: { first: ['jwouIPiU'] } }[id] || {};
+    var hit = function (list) { return function (s) { return (list || []).some(function (p) { return fileOf(s).indexOf(p) === 0; }); }; };
+    var isF = hit(MOVE.first), isL = hit(MOVE.last);
+    imgs = imgs.filter(isF).concat(imgs.filter(function (s) { return !isF(s) && !isL(s); }), imgs.filter(isL));
     var titles = {}, cats = GCATS[id] || {}, names = Object.keys(cats);
     (R[key] || []).forEach(function (o) { if (o.t === 'img' && o.alt && o.alt !== 'Untitled') titles[fileOf(o.src)] = o.alt; });
     var set = imgs.map(function (src, k) {
