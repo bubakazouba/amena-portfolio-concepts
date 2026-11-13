@@ -508,6 +508,9 @@ h1,h2,h3,.h2,.brand,.hero h1,.feat-body h3{font-family:var(--display);letter-spa
 .fw-links a:hover svg{background:rgba(33,177,255,.12)}
 .fw-links b{font:600 13px/1.4 var(--label);color:var(--muted)}
 @media (max-width:760px){.fw-pages{align-items:flex-start!important}}
+
+.masonry.mz{columns:auto;display:flex;gap:14px;align-items:flex-start}.masonry.mz>.mcol{flex:1;min-width:0}
+@media (max-width:620px){.masonry.mz{gap:8px}}
 </style>
 </head>
 <body>
@@ -1346,11 +1349,26 @@ var A = (function (R, D) {
       '<div class="wrap"><div class="masonry" id="gal-m">' + A.galleryButtons(g, 1024) + '</div></div>' + contactBlock();
   }
 
+
+  /* Amena 11/13: row-first masonry so the first photos sit across the TOP (CSS columns filled column 1 first) */
+  function masonize() {
+    var m = document.getElementById('gal-m'); if (!m) return;
+    var items = [].slice.call(m.querySelectorAll('.g-item'));
+    if (!items.length) return;
+    var w = m.clientWidth, n = window.innerWidth <= 620 ? 2 : Math.max(1, Math.min(3, Math.floor((w + 14) / 294)));
+    var cols = [];
+    for (var c = 0; c < n; c++) { var d = document.createElement('div'); d.className = 'mcol'; cols.push(d); }
+    items.forEach(function (it, k) { cols[k % n].appendChild(it); });
+    m.innerHTML = ''; cols.forEach(function (d) { m.appendChild(d); });
+    m.classList.add('mz'); m.setAttribute('data-n', n);
+  }
+  var mzT; window.addEventListener('resize', function () { clearTimeout(mzT); mzT = setTimeout(function () { var m = document.getElementById('gal-m'); if (!m) return; var items = [].slice.call(m.querySelectorAll('.g-item')).sort(function (a, b) { return a.getAttribute('data-i') - b.getAttribute('data-i'); }); m.innerHTML = ''; items.forEach(function (i) { m.appendChild(i); }); masonize(); }, 150); });
   document.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('[data-gf]'), m = document.getElementById('gal-m');
     if (!b || !m) return;
     var g = b.getAttribute('data-g') === PH.id ? PH : GD;
     m.innerHTML = A.galleryButtons(g, 1024, null, b.getAttribute('data-gf'));
+    m.classList.remove('mz'); masonize();
     [].forEach.call(b.parentNode.children, function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
   });
 
@@ -1378,6 +1396,7 @@ var A = (function (R, D) {
       view.innerHTML = ROUTES[path]();
       view.classList.remove('view-enter'); void view.offsetWidth; view.classList.add('view-enter');
       lastPath = path;
+      masonize();
       if (path === '/') { startRotator(); initDeal(); syncInline(); }
       if (path === '/work/sahl-system-design' && SHOW_PROTO) initProto();
       if (path.indexOf('/work/') === 0) initToc();
