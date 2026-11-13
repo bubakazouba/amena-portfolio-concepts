@@ -923,6 +923,8 @@ var A = (function (R, D) {
   /* ---------------- home ---------------- */
   /* header collage photos (Amena 11/06) */
   var HERO = ['img/hero-bee.jpg', 'img/hero-vancouver.jpg', 'img/hero-cairo-tower.jpg'];
+  // Sahl prototype is ON HOLD (Amena 2026-11-13): hidden in v2; still reachable at sahl-prototype.html (= ?proto=1)
+  var SHOW_PROTO = /[?&]proto=1(&|$)/.test(location.search);
   function homeView() {
     var r0 = H.rotRoles[0], lead = H.lead.replace(/\s+a$/, '');
     var f = H.featured;
@@ -932,7 +934,7 @@ var A = (function (R, D) {
         '<div>' +
           '<p class="avail"><i aria-hidden="true"></i>' + esc(H.available) + '</p>' +
           '<h1 id="page-h" tabindex="-1">' + esc(lead) + ' <span id="art">' + A.article(r0) + '</span> <span class="rot"><span id="rot" aria-hidden="true">' + esc(r0) + '</span><span class="sr-only">' + esc(H.rotRoles.join(', ')) + '</span></span>,<br><span class="tail">' + esc(H.tail) + '</span></h1>' +
-          '<div class="cta"><a class="btn btn-primary" href="#/work/sahl-system-design">Try the Sahl prototype →</a><a class="btn" href="#/contact">Let’s talk</a></div>' +
+          '<div class="cta"><a class="btn btn-primary" href="#/work/sahl-system-design">' + (SHOW_PROTO ? 'Try the Sahl prototype →' : 'See the Sahl case study →') + '</a><a class="btn" href="#/contact">Let’s talk</a></div>' +
         '</div>' +
         '<div class="hero-art" aria-hidden="true">' +
           HERO.map(function (src, k) { return '<div class="card c' + (k + 1) + '">' + A.imgTag(src, { lazy: false }) + '</div>'; }).join('') +
@@ -940,8 +942,8 @@ var A = (function (R, D) {
       '</section>' +
       '<section class="sec wrap" id="work" aria-labelledby="work-h"><div class="sec-head"><h2 id="work-h">' + esc(H.featuredTitle) + '</h2></div><div class="feat">' +
         f.map(function (p, k) {
-          return '<a class="feat-card" href="#/work/' + slugs[k] + '"><div class="feat-img">' + A.imgTag(p.img, { w: 1024, alt: p.title }) + (k === 0 ? '<span class="pill-live">Interactive prototype inside</span>' : '') + '</div>' +
-            '<div class="feat-body"><div class="tags">' + p.tags.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div>' +
+          return '<a class="feat-card" href="#/work/' + slugs[k] + '"><div class="feat-img">' + A.imgTag(p.img, { w: 1024, alt: p.title }) + (k === 0 && SHOW_PROTO ? '<span class="pill-live">Interactive prototype inside</span>' : '') + '</div>' +
+            '<div class="feat-body"><div class="tags">' + p.tags.map(function (t) { return '<span class="tag">' + esc(String(t).toLowerCase()) + '</span>'; }).join('') + '</div>' +
             '<h3>' + esc(p.title) + '</h3><p>' + esc(p.sub) + '</p><p class="dates">' + esc(p.cs.metaGet('Company')[0] || '') + ' · ' + esc(p.dates) + '</p><span class="arrow">Read the case study →</span></div></a>';
         }).join('') +
       '</div><div class="more">' + moreCard(PH, '#/photography', PH.images.length + ' photographs') + moreCard(GD, '#/graphic-design', GD.images.length + ' pieces') + '</div></section>' +
@@ -1299,7 +1301,7 @@ var A = (function (R, D) {
   A.sets.life = H.life.map(function (s, k) { return { src: s, alt: 'Photo by Amena, ' + (k + 1) + ' of ' + H.life.length, cap: H.outside }; });
   var ROUTES = {
     '/': function () { return homeView(); },
-    '/work/sahl-system-design': function () { return caseView(SAHL, true); },
+    '/work/sahl-system-design': function () { return caseView(SAHL, SHOW_PROTO); },
     '/work/mascot': function () { return caseView(BUDZ, false); },
     '/photography': function () { return galleryView(PH, 'photographs'); },
     '/graphic-design': function () { return galleryView(GD, 'pieces'); }
@@ -1320,7 +1322,7 @@ var A = (function (R, D) {
       view.classList.remove('view-enter'); void view.offsetWidth; view.classList.add('view-enter');
       lastPath = path;
       if (path === '/') { startRotator(); initDeal(); syncInline(); }
-      if (path === '/work/sahl-system-design') initProto();
+      if (path === '/work/sahl-system-design' && SHOW_PROTO) initProto();
       if (path.indexOf('/work/') === 0) initToc();
       if (!anchor) { window.scrollTo(0, 0); var ph = document.getElementById('page-h'); if (ph) ph.focus({ preventScroll: true }); }
     }
