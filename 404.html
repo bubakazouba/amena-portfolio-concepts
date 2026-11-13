@@ -514,7 +514,7 @@ h1,h2,h3,.h2,.brand,.hero h1,.feat-body h3{font-family:var(--display);letter-spa
 .nf{padding-top:28px;padding-bottom:40px}
 .nf-img{width:100%;aspect-ratio:21/9;object-fit:cover;border-radius:16px;display:block}
 .nf-code{font-family:var(--display);font-weight:800;font-size:clamp(96px,16vw,200px);line-height:.9;color:var(--pink);margin:32px 0 8px;letter-spacing:-.02em}
-.nf h1{font-size:clamp(28px,4vw,44px);margin:0 0 10px}
+.nf h1{font-size:clamp(26px,3.6vw,40px);margin:0 0 28px;max-width:22em}
 .nf-body{font-size:18px;color:var(--muted);margin:0 0 28px}
 .nf-grid{grid-template-columns:repeat(2,1fr)!important}
 .nf-grid a{padding-right:14px!important}
@@ -1381,8 +1381,7 @@ var A = (function (R, D) {
     return '<section class="wrap nf">' +
       '<img class="nf-img" src="img/404-bench.webp" alt="An empty park bench between two trees">' +
       '<p class="nf-code">404</p>' +
-      '<h1 id="page-h" tabindex="-1">Couldn’t find what you’re looking for!</h1>' +
-      '<p class="nf-body">Take a seat and have a look at one of these pages instead.</p>' +
+      '<h1 id="page-h" tabindex="-1">Page not found! Take a seat and have a look at one of these pages instead</h1>' +
       '<div class="next nf-grid">' + cards.map(function (c) {
         return '<a href="' + c[0] + '">' + A.imgTag(c[1], { w: 512, alt: '' }) + '<span><small>' + c[2] + '</small><b>' + esc(c[3]) + '</b></span></a>';
       }).join('') + '</div></section>';
