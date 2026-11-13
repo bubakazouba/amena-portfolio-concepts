@@ -1023,7 +1023,7 @@ var A = (function (R, D) {
   };
   function contactBlock() {
     return '<section class="sec wrap" id="contact" aria-labelledby="contact-h"><div class="contact"><h2 id="contact-h">Let’s Talk!</h2>' +
-      '<div class="cta"><a class="btn btn-primary" href="' + A.CONTACT + '" target="_blank" rel="noopener">Send a message ↗</a><a class="btn btn-ghost" href="Amena-Sahmoud-Resume.pdf" target="_blank" rel="noopener">Resumé ↗</a></div>' +
+      '<div class="cta"><a class="btn btn-primary" href="mailto:sahmoudamena@gmail.com">Send a message ↗</a><a class="btn btn-ghost" href="Amena-Sahmoud-Resume.pdf" target="_blank" rel="noopener">Resumé ↗</a></div>' +
       '<ul class="contact-links">' +
         '<li><a href="mailto:' + A.EMAIL + '">' + ICON.mail + '<b>Email</b>' + esc(A.EMAIL) + '</a></li>' +
         '<li><a href="https://www.linkedin.com/in/amenasahmoud" target="_blank" rel="noopener">' + ICON.linkedin + '<b>LinkedIn</b>linkedin.com/in/amenasahmoud</a></li>' +
@@ -1451,6 +1451,15 @@ var A = (function (R, D) {
   window.addEventListener('hashchange', route);
   route();
 })();
+</script>
+<script>
+/* Resume links (Amena 11/13): keep opening the PDF in a new tab AND also download the file */
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[href$="Amena-Sahmoud-Resume.pdf"]');
+  if (!a || a.hasAttribute('download')) return;
+  var d = document.createElement('a'); d.href = a.href; d.download = 'Amena-Sahmoud-Resume.pdf';
+  d.style.display = 'none'; document.body.appendChild(d); d.click(); d.remove();
+}, true);
 </script>
 </body>
 </html>
