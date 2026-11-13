@@ -513,6 +513,8 @@ h1,h2,h3,.h2,.brand,.hero h1,.feat-body h3{font-family:var(--display);letter-spa
 .fw-links a:hover svg{background:rgba(33,177,255,.12)}
 .fw-links b{font:600 13px/1.4 var(--label);color:var(--muted)}
 @media (max-width:760px){.fw-pages{align-items:flex-start!important}}
+/* Amena 11/13: on phones Let's Talk / Resume sit right under her name, above the page links */
+@media (max-width:760px){.foot-white .wrap.fw{display:flex!important;flex-direction:column}.fw-top{display:contents}.fw-id{order:1}.fw-cta{order:2;margin-top:22px}.fw-pages{order:3;margin-top:30px}.fw-links{order:4}}
 
 /* 404 page */
 .nf{padding-top:28px;padding-bottom:40px}
