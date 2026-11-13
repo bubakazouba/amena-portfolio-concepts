@@ -233,13 +233,14 @@ main{overflow-x:clip}
 .foot nav a{font-size:16px}
 
 /* Amena 11/13 footer: big bee, big name, tri-colour rule under the name, then pages + contact columns */
-.foot-grid{display:grid!important;grid-template-columns:1fr auto auto;gap:24px 96px;align-items:start!important;padding-top:40px}
+.foot-grid{display:grid!important;grid-template-columns:1fr auto auto;gap:24px 160px;align-items:start!important;padding-top:40px}
 .foot-bee img{width:120px;height:auto;display:block}
-.foot-name{font-family:var(--display);font-size:clamp(36px,5vw,60px);line-height:1;margin:18px 0 0;color:var(--ink);letter-spacing:.01em}
+.foot-name{font-family:var(--display);font-weight:800;font-size:clamp(36px,5vw,60px);line-height:1;margin:18px 0 12px;color:var(--ink);letter-spacing:-.01em}
 .foot-rule{display:block;height:5px;width:min(100%,460px);margin:14px 0 12px;background:var(--tri);border-radius:3px}
 .foot-sub{margin:0;color:var(--muted);font-size:17px}
 .foot-col{display:flex!important;flex-direction:column;align-items:flex-end!important;gap:8px!important;margin-top:150px}
-.foot .foot-col a{font-size:17px;color:var(--ink)}
+.foot .foot-col a{font-family:var(--font);font-size:15px;font-weight:550;color:var(--muted);text-decoration:none}
+.foot .foot-col a:hover{color:var(--ink)}
 @media (max-width:760px){.foot-grid{grid-template-columns:1fr 1fr}.foot-id{grid-column:1/-1}.foot-col{align-items:flex-start!important;margin-top:0}}
 
 /* ---------- case study ---------- */
@@ -510,7 +511,6 @@ h1,h2,h3,.h2,.brand,.hero h1,.feat-body h3{font-family:var(--display);letter-spa
     <div class="foot-id">
       <a class="foot-bee" href="#/" aria-label="Amena Sahmoud, home"><img src="img/bee.png" alt=""></a>
       <p class="foot-name">Amena Sahmoud</p>
-      <span class="foot-rule" aria-hidden="true"></span>
       <p class="foot-sub">UI/UX Design, Graphic Design, Photography, Art</p>
     </div>
     <nav class="foot-col" aria-label="Pages">
