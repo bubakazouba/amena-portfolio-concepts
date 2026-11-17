@@ -422,6 +422,7 @@ main{overflow-x:clip}
 .cs-step-n{width:24px;height:24px;border-radius:8px;background:var(--blue-50);color:var(--blue);display:grid;place-items:center;font-weight:800;font-size:12px}
 @media (max-width:760px){.cs-steps{grid-template-columns:1fr 1fr}}
 .cs-cards,.cs-num{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:0 0 22px}
+.cs-cards{grid-auto-rows:1fr} /* Amena 11/17: every row as tall as the tallest */
 .cs-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
 .cs-card h5{margin:0 0 6px;font-size:15px;letter-spacing:-.01em}
 .cs-card p{margin:0;color:var(--muted);font-size:15px}
