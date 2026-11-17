@@ -435,7 +435,7 @@ main{overflow-x:clip}
 @media (max-width:760px){.cs-steps{grid-template-columns:1fr 1fr}}
 .cs-cards,.cs-num{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:0 0 22px}
 .cs-cards{grid-auto-rows:1fr} /* Amena 11/17: every row as tall as the tallest */
-.cs-zoom img[src*="donations-before"]{box-sizing:border-box;padding-top:28px} /* Amena 11/17: phone mockups were touching the top edge of their cards */
+.cs-imgs:has(img[src*="donations-before"]){gap:0;border:1px solid var(--line);background:#fff;border-radius:16px;overflow:hidden;padding-top:28px} .cs-imgs:has(img[src*="donations-before"]) .cs-zoom{border:0;border-radius:0}.cs-imgs:has(img[src*="donations-before"]) .cs-zoom:hover{transform:none;box-shadow:none} /* Amena 11/17: both donation phones in one card, with space above them */
 .cs-fig-3 .cs-imgs{align-items:stretch}.cs-fig-3 .cs-zoom{display:flex;align-items:center;justify-content:center}.cs-fig-3 .cs-zoom img{height:520px;width:auto;max-width:100%;object-fit:contain} /* Amena 11/17: 3-up screens same height */
 @media (max-width:700px){.cs-fig-3 .cs-zoom img{height:auto;width:100%}}
 .cs-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
