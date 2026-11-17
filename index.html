@@ -436,6 +436,8 @@ main{overflow-x:clip}
 .cs-cards,.cs-num{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:0 0 22px}
 .cs-cards{grid-auto-rows:1fr} /* Amena 11/17: every row as tall as the tallest */
 .cs-zoom img[src*="donations-before"]{box-sizing:border-box;padding-top:28px} /* Amena 11/17: phone mockups were touching the top edge of their cards */
+.cs-fig-3 .cs-imgs{align-items:stretch}.cs-fig-3 .cs-zoom{display:flex;align-items:center;justify-content:center}.cs-fig-3 .cs-zoom img{height:520px;width:auto;max-width:100%;object-fit:contain} /* Amena 11/17: 3-up screens same height */
+@media (max-width:700px){.cs-fig-3 .cs-zoom img{height:auto;width:100%}}
 .cs-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
 .cs-card h5{margin:0 0 6px;font-size:15px;letter-spacing:-.01em}
 .cs-card p{margin:0;color:var(--muted);font-size:15px}
