@@ -262,6 +262,8 @@ main{overflow-x:clip}
 .link-ext:hover{text-decoration:underline}
 .cover{display:block;width:100%;border:0;padding:0;background:var(--blue);border-radius:16px;overflow:hidden;cursor:zoom-in;box-shadow:var(--shadow-lg)}
 .cover img{width:100%}
+.cover.bleed{border-radius:0;box-shadow:none;margin:0;width:100%}
+.cover.bleed img{display:block}
 /* prototype */
 .proto{padding:90px 0 40px}
 .proto-head{max-width:720px;margin-bottom:34px}
@@ -1124,12 +1126,13 @@ var A = (function (R, D) {
   /* ---------------- case study ---------------- */
   function caseView(cs, withProto) {
     var other = cs === SAHL ? BUDZ : SAHL, otherHref = cs === SAHL ? '#/work/mascot' : '#/work/sahl-system-design';
+    /* Amena 11/17: cover first, full page width with no margins; title + meta below it, so the page opens on the work */
     return '<article>' +
+      (cs.hero ? '<button type="button" class="cover bleed" data-lb="' + cs.id + '" data-i="0" aria-label="Enlarge cover image">' + A.imgTag(cs.hero, { w: 2048, alt: cs.title + ' cover', lazy: false }) + '</button>' : '') +
       '<header class="wrap case-hero">' +
         '<h1 id="page-h" tabindex="-1">' + esc(cs.title) + '</h1><p class="lede">' + esc(cs.sub) + '</p>' +
         A.renderMeta(cs) +
       '</header>' +
-      (cs.hero ? '<div class="wrap"><button type="button" class="cover" data-lb="' + cs.id + '" data-i="0" aria-label="Enlarge cover image">' + A.imgTag(cs.hero, { w: 2048, alt: cs.title + ' cover', lazy: false }) + '</button></div>' : '') +
       (withProto ? protoHTML() : '') +
       '<div class="wrap case-body"><nav class="toc" aria-label="Case study sections"><p>Contents</p><ol>' +
         (withProto ? '<li><a href="#proto" data-jump="proto">Try the pattern</a></li>' : '') +
